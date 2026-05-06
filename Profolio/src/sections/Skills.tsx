@@ -1,40 +1,36 @@
-// src/sections/Skills.tsx
-import { motion } from 'framer-motion';
+import { Code2, Database, Layers3, ShieldCheck, Waypoints, Workflow } from 'lucide-react';
 import { SKILLS } from '../config/data';
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
+const skillIcons = [
+  Code2,
+  Workflow,
+  Waypoints,
+  Layers3,
+  Database,
+  ShieldCheck,
+];
 
-const item = {
-  hidden: { opacity: 0, scale: 0.5 },
-  show: { opacity: 1, scale: 1 }
-};
+const marqueeSkills = [...SKILLS, ...SKILLS];
 
 export const Skills = () => {
   return (
-    <section className="py-20 px-4">
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto"
-      >
-        {SKILLS.map((skill) => (
-          <motion.span 
-            key={skill}
-            variants={item}
-            className="px-6 py-2 bg-slate-900 text-white rounded-full text-sm font-medium cursor-default hover:bg-blue-600 transition-colors"
-          >
-            {skill}
-          </motion.span>
-        ))}
-      </motion.div>
+    <section className="py-10">
+      <div className="skills-marquee-shell">
+        <div className="skills-marquee-track">
+          {marqueeSkills.map((skill, index) => {
+            const Icon = skillIcons[index % skillIcons.length];
+
+            return (
+              <div key={`${skill}-${index}`} className="skills-marquee-item">
+                <span className="skills-marquee-icon">
+                  <Icon size={18} />
+                </span>
+                <span>{skill}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 };

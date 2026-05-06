@@ -2,11 +2,23 @@
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    font-family: "Sora", "Segoe UI", sans-serif;
+    color: #0f172a;
+    background: #fffdf8;
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-white text-slate-900 antialiased;
+    @apply antialiased;
+    background: #fffdf8;
+    color: #0f172a;
+  }
+
+  #root {
+    min-height: 100vh;
   }
 }

@@ -1,36 +1,48 @@
 // src/components/ProjectCard.tsx
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { Code } from 'lucide-react';
+
 
 interface ProjectProps {
   title: string;
   description: string;
   tags: string[];
   isFeatured?: boolean;
+  variant?: 'cyan' | 'amber' | 'rose';
 }
 
-export const ProjectCard = ({ title, description, tags, isFeatured }: ProjectProps) => {
+export const ProjectCard = ({ title, description, tags, isFeatured, variant = 'cyan' }: ProjectProps) => {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className={`p-6 rounded-3xl bg-white border border-slate-100 shadow-sm flex flex-col justify-between transition-all hover:shadow-xl ${
-        isFeatured ? 'md:col-span-2 md:row-span-2 bg-linear-to-br from-blue-50 to-white' : ''
+      whileHover={{ y: -6 }}
+      className={`project-card project-card-${variant} group relative flex min-h-[24rem] w-[20rem] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-white/55 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.10)] transition-all hover:shadow-[0_30px_90px_rgba(15,23,42,0.18)] md:w-[24rem] ${
+        isFeatured
+          ? 'project-card-featured bg-linear-to-br from-cyan-100 via-white to-amber-50 md:w-[30rem]'
+          : 'bg-white/78 backdrop-blur-sm'
       }`}
     >
+      <div className="project-card-overlay absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="project-card-orb absolute -right-12 top-8 h-28 w-28 rounded-full blur-2xl" />
+
       <div>
-        <div className="flex justify-between items-start mb-4">
-          <div className="p-3 bg-blue-600 rounded-2xl text-white">
-            <Github size={20} />
+        <div className="mb-6">
+          <div className="rounded-2xl bg-slate-950 p-3 text-white shadow-lg">
+            <Code size={20} />
           </div>
-          <ExternalLink size={20} className="text-slate-400 hover:text-blue-600 cursor-pointer" />
         </div>
-        <h3 className="text-xl font-bold text-slate-900 mb-2">{title}</h3>
-        <p className="text-slate-600 text-sm mb-4 leading-relaxed">{description}</p>
+        <p className="project-card-kicker mb-3 text-xs font-semibold uppercase tracking-[0.3em]">
+          {isFeatured ? 'Featured Build' : 'Project Snapshot'}
+        </p>
+        <h3 className="mb-3 text-2xl font-black text-slate-900">{title}</h3>
+        <p className="mb-6 text-sm leading-7 text-slate-600">{description}</p>
       </div>
       
-      <div className="flex flex-wrap gap-2">
+      <div className="relative z-10 flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <span key={tag} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full font-medium">
+          <span
+            key={tag}
+            className="rounded-full border border-slate-200/80 bg-white/75 px-3 py-1 text-xs font-semibold text-slate-700 backdrop-blur-sm"
+          >
             {tag}
           </span>
         ))}
