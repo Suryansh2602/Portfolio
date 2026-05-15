@@ -15,7 +15,7 @@ const marqueeSkills = [...SKILLS, ...SKILLS];
 export const Skills = () => {
   return (
     <section className="py-10">
-      <div className="skills-marquee-shell">
+      <div className="skills-marquee-shell bg-black/10">
         <div className="skills-marquee-track">
           {marqueeSkills.map((skill, index) => {
             const Icon = skillIcons[index % skillIcons.length];

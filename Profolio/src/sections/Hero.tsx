@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import profilePhoto from '../assets/{2E6CF1C9-643E-4572-9B0E-280814498F85}.png';
 import { openWhatsApp } from '../utils/whatsapp';
 
+
+
 const services = [
   {
     title: 'Backend Architecture',
@@ -27,12 +29,12 @@ export const Hero = () => {
       <motion.div
         animate={{ x: [0, 20, -10, 0], y: [0, -24, 12, 0] }}
         transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute left-[-8rem] top-20 h-72 w-72 rounded-full bg-cyan-300/30 blur-3xl"
+        className="absolute left--8rem top-20 h-72 w-72 rounded-full bg-cyan-300/30 blur-3xl"
       />
       <motion.div
         animate={{ scale: [1, 1.15, 1], rotate: [0, 8, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute right-[-4rem] top-12 h-96 w-96 rounded-full bg-amber-200/35 blur-3xl"
+        className="absolute right--4rem top-12 h-96 w-96 rounded-full bg-amber-200/35 blur-3xl"
       />
 
       <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
@@ -59,21 +61,26 @@ export const Hero = () => {
             and clients who want clean engineering and confident delivery.
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+          <div className="mt-10 flex flex-col items-center gap-6 sm:flex-row lg:justify-start">
             <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => openWhatsApp('Development')}
-              className="rounded-full bg-slate-950 px-8 py-4 font-bold text-white shadow-[0_18px_45px_rgba(15,23,42,0.25)] transition-colors hover:bg-cyan-700"
+              className="group relative rounded-full bg-white px-10 py-4 text-sm font-black uppercase tracking-widest text-slate-950 transition-all hover:bg-cyan-400"
             >
               Book Consultancy
             </motion.button>
-            <div className="rounded-full border border-slate-200 bg-white/75 px-5 py-3 text-sm text-slate-600 backdrop-blur-sm">
-              Backend architecture, freelance builds, and product consulting
+
+            <div className="relative max-w-xs text-center sm:text-left">
+              <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                <strong className="text-slate-900 dark:text-white">Expertise in</strong> Backend architecture,
+                freelance builds, and product consulting.
+              </p>
+              {/* Subtle accent line */}
+              <div className="absolute -left-4 top-0 hidden h-full w-1px  from-transparent  via-cyan-500 to-transparent lg:block" />
             </div>
           </div>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -114,7 +121,8 @@ export const Hero = () => {
             ))}
           </div>
         </motion.div>
+
       </div>
     </section>
   );
-};
+}

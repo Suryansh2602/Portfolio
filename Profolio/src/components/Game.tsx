@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { useTicTacToe } from '../hooks/useTicTacToe';
 import { getRandomIndex } from '../utils/random';
 import planeImage from '../assets/plane.png';
+import BorderGlow from './BorderGlow';
 
 type Choice = 'Rock' | 'Paper' | 'Scissors';
 
@@ -27,7 +28,6 @@ const getRoundWinner = (user: Choice, computer: Choice) => {
   ) {
     return 'User';
   }
-
   return 'Computer';
 };
 
@@ -39,10 +39,7 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
   const [showCelebration, setShowCelebration] = useState(false);
 
   const roundWinner = useMemo(() => {
-    if (!userChoice || !computerChoice || !isRevealed) {
-      return null;
-    }
-
+    if (!userChoice || !computerChoice || !isRevealed) return null;
     return getRoundWinner(userChoice, computerChoice);
   }, [computerChoice, isRevealed, userChoice]);
 
@@ -56,7 +53,6 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
   const revealRound = () => {
     if (!userChoice || !computerChoice) return;
     setIsRevealed(true);
-
     if (getRoundWinner(userChoice, computerChoice) === 'User') {
       setShowCelebration(true);
       onCelebrate?.();
@@ -72,7 +68,7 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
   };
 
   return (
-    <section className="relative bg-slate-50 px-4 py-20">
+    <section className="relative px-4 py-20  overflow-hidden min-h-screen">
       <AnimatePresence>
         {showCelebration && (
           <motion.div
@@ -81,273 +77,187 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
             exit={{ opacity: 0 }}
             className="pointer-events-none fixed inset-0 z-[80] overflow-hidden"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-cyan-200/10"
-            />
+            <div className="absolute inset-0 bg-cyan-200/5" />
             <motion.div
               initial={{ x: '-55vw', y: 42, opacity: 0 }}
               animate={{ x: '132vw', y: -12, opacity: [0, 1, 1, 1, 0] }}
-              exit={{ opacity: 0 }}
               transition={{ duration: 6.8, ease: 'linear' }}
               className="absolute left-0 top-[16%] z-[82]"
             >
               <div className="relative flex items-center">
-                <div className="ml-3 rounded-full border border-white/70 bg-slate-950/90 px-5 py-2 text-sm font-black uppercase tracking-[0.28em] text-white shadow-2xl">
+                <div className="ml-3 rounded-full border border-white/70 px-5 py-2 text-sm font-black uppercase tracking-[0.28em] ">
                   You Won
                 </div>
-                <div className="-ml-2 rounded-full bg-white/90 p-2 shadow-[0_12px_32px_rgba(15,23,42,0.2)]">
-                  <img
-                    src={planeImage}
-                    alt="Celebration plane"
-                    className="h-10 w-10 object-contain"
-                  />
+                <div className="-ml-2 rounded-full bg-white/90 p-2 ">
+                  <img src={planeImage} alt="Plane" className="h-10 w-10 object-contain" />
                 </div>
-                {planeSprinkles.map((sprinkle) => (
+                {planeSprinkles.map((s) => (
                   <motion.span
-                    key={sprinkle}
-                    initial={{ opacity: 0, x: -8, y: 0, scale: 0.4 }}
-                    animate={{
-                      opacity: [0, 1, 0],
-                      x: [-18 - sprinkle * 3, -110 - sprinkle * 7],
-                      y: [0, sprinkle % 2 === 0 ? 28 : -28],
-                      scale: [0.4, 1, 0.6],
-                    }}
-                    exit={{ opacity: 0 }}
-                    transition={{
-                      duration: 1.2,
-                      ease: 'easeOut',
-                      delay: 0.3 + sprinkle * 0.05,
-                    }}
-                    className={`absolute left-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full ${
-                      sprinkle % 3 === 0
-                        ? 'bg-cyan-300'
-                        : sprinkle % 3 === 1
-                          ? 'bg-amber-300'
-                          : 'bg-emerald-300'
-                    } shadow-[0_0_16px_rgba(255,255,255,0.8)]`}
+                    key={s}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: [0, 1, 0], x: [-18 - s * 3, -110 - s * 7], y: [0, s % 2 === 0 ? 28 : -28] }}
+                    className="absolute h-2 w-2 rounded-full bg-cyan-400"
                   />
                 ))}
               </div>
             </motion.div>
-            {crackerBursts.map((burst, burstIndex) => (
-              <div
-                key={`${burst.top}-${burst.left}`}
-                className="absolute"
-                style={{ top: burst.top, left: burst.left }}
-              >
-                {Array.from({ length: 10 }, (_, sparkIndex) => (
+            {crackerBursts.map((burst, i) => (
+              <div key={i} className="absolute" style={{ top: burst.top, left: burst.left }}>
+                {Array.from({ length: 10 }).map((_, si) => (
                   <motion.span
-                    key={`${burstIndex}-${sparkIndex}`}
-                    initial={{ opacity: 0, scale: 0.2, x: 0, y: 0 }}
-                    animate={{
-                      opacity: [0, 1, 0],
-                      scale: [0.2, 1, 0.85],
-                      x: [0, Math.cos((sparkIndex / 10) * Math.PI * 2) * 70],
-                      y: [0, Math.sin((sparkIndex / 10) * Math.PI * 2) * 70],
-                    }}
-                    exit={{ opacity: 0 }}
-                    transition={{
-                      duration: 0.9,
-                      ease: 'easeOut',
-                      delay: burst.delay,
-                    }}
-                    className={`absolute left-0 top-0 h-3 w-3 rounded-full ${
-                      sparkIndex % 3 === 0
-                        ? 'bg-amber-300'
-                        : sparkIndex % 3 === 1
-                          ? 'bg-cyan-300'
-                          : 'bg-rose-300'
-                    } shadow-[0_0_20px_rgba(255,255,255,0.65)]`}
+                    key={si}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: [0, 1, 0], x: Math.cos(si) * 70, y: Math.sin(si) * 70, scale: [0, 1, 0.5] }}
+                    transition={{ duration: 0.9, delay: burst.delay }}
+                    className="absolute h-2 w-2 rounded-full bg-amber-300 shadow-glow"
                   />
                 ))}
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.3 }}
-                  animate={{ opacity: [0, 1, 0], scale: [0.3, 2.2, 2.8] }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: 'easeOut', delay: burst.delay }}
-                  className="absolute left-0 top-0 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70"
-                />
               </div>
             ))}
-            {confettiPieces.map((piece) => (
-              <motion.span
-                key={piece}
-                initial={{
-                  opacity: 0,
-                  y: -120,
-                  x: `${(piece % 8) * 12 + 4}vw`,
-                  rotate: 0,
-                }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  y: ['-10vh', '105vh'],
-                  rotate: [0, 220, 360],
-                }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  duration: 2.3,
-                  ease: 'easeOut',
-                  delay: (piece % 8) * 0.07,
-                }}
-                className={`absolute top-0 h-4 w-4 rounded-sm ${
-                  piece % 3 === 0
-                    ? 'bg-cyan-500'
-                    : piece % 3 === 1
-                      ? 'bg-amber-400'
-                      : 'bg-emerald-400'
-                }`}
-              />
-            ))}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="absolute inset-x-0 top-16 mx-auto w-fit rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white shadow-2xl"
-            >
-              You win! Clean victory.
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 text-center">
-          <h2 className="text-3xl font-bold md:text-4xl">Take a Break?</h2>
-          <p className="mt-3 text-slate-500">Play a quick round before the next build ships.</p>
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl font-black tracking-tight md:text-5xl">Take a Break?</h2>
+          <p className="mt-4 text-slate-400 text-lg">Quick games for a quick refresh.</p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <article className="rounded-[2rem] border border-white/60 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm">
-            <div className="mb-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-700">Game One</p>
-              <h3 className="mt-2 text-2xl font-black text-slate-950">Tic-Tac-Toe</h3>
-              <p className="mt-2 text-sm leading-7 text-slate-600">Classic and quick. Try to outplay the board.</p>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 rounded-2xl bg-slate-200 p-2 shadow-inner">
-              {board.map((value, i) => (
-                <motion.button
-                  key={i}
-                  whileHover={{ scale: 0.98 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex h-20 w-full items-center justify-center rounded-xl bg-white text-3xl font-bold shadow-sm md:h-24"
-                  onClick={() => handleClick(i)}
-                >
-                  <AnimatePresence>
-                    {value && (
-                      <motion.span
-                        initial={{ opacity: 0, scale: 0.7 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className={value === 'X' ? 'text-blue-600' : 'text-rose-500'}
-                      >
-                        {value}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </motion.button>
-              ))}
-            </div>
-
-            <div className="mt-6 text-center">
-              {winner ? (
-                <motion.p initial={{ scale: 0.94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-xl font-bold text-green-600">
-                  Winner: {winner}
-                </motion.p>
-              ) : isDraw ? (
-                <p className="text-xl font-bold text-slate-600">It&apos;s a draw</p>
-              ) : (
-                <p className="text-base text-slate-700">
-                  Next player: <span className="font-bold">{isXNext ? 'X' : 'O'}</span>
-                </p>
-              )}
-
-              <button
-                onClick={resetGame}
-                className="mt-4 rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 transition hover:border-cyan-700 hover:text-cyan-700"
-              >
-                Reset Game
-              </button>
-            </div>
-          </article>
-
-          <article className="rounded-[2rem] border border-white/60 bg-white/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm">
-            <div className="mb-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-700">Game Two</p>
-              <h3 className="mt-2 text-2xl font-black text-slate-950">Rock Paper Scissors</h3>
-              <p className="mt-2 text-sm leading-7 text-slate-600">
-                The computer picks first but keeps it hidden. You choose, then reveal the winner.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3">
-              {choices.map((choice) => (
-                <motion.button
-                  key={choice}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleChoiceSelect(choice)}
-                  className={`rounded-[1.5rem] border px-4 py-5 text-left transition ${
-                    userChoice === choice
-                      ? 'border-cyan-700 bg-cyan-50 shadow-md'
-                      : 'border-slate-200 bg-white hover:border-slate-300'
-                  }`}
-                >
-                  <p className="text-lg font-bold text-slate-900">{choice}</p>
-                  <p className="mt-2 text-sm text-slate-500">Choose this move</p>
-                </motion.button>
-              ))}
-            </div>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-1.5rem border border-slate-200 bg-slate-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Your Choice</p>
-                <p className="mt-3 text-xl font-black text-slate-950">{userChoice ?? 'Waiting for selection'}</p>
+        <div className="grid gap-8 lg:grid-cols-2 bg-none backdrop-blur-sm">
+          {/* GAME ONE: TIC TAC TOE */}
+          <BorderGlow
+            glowColor="192 132 252"
+            borderRadius={32}
+            glowRadius={50}
+            colors={['#c084fc', '#38bdf8']}
+          >
+            <article className="p-6 h-full flex flex-col ">
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-purple-400">Game One</p>
+                <h3 className="mt-2 text-3xl font-black ">Tic-Tac-Toe</h3>
               </div>
-              <div className="rounded-1.5rem border border-slate-200 bg-slate-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Computer Choice</p>
-                <p className="mt-3 text-xl font-black text-slate-950">
-                  {isRevealed ? computerChoice : 'Hidden until reveal'}
-                </p>
+
+              <div className="grid grid-cols-3 gap-3 rounded-3xl ">
+                {board.map((value, i) => (
+                  <motion.button
+                    key={i}
+                    whileHover={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex h-24 items-center justify-center rounded-2xl  text-4xl font-black  bg-purple-300/30  shadow-inner transition-colors"
+                    onClick={() => handleClick(i)}
+                  >
+                    <AnimatePresence mode="wait">
+                      {value && (
+                        <motion.span
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className={value === 'X' ? 'text-cyan-400' : 'text-rose-500'}
+                        >
+                          {value}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
+                ))}
               </div>
-            </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <button
-                onClick={revealRound}
-                disabled={!userChoice}
-                className="rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white transition enabled:hover:bg-cyan-700 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Reveal Result
-              </button>
-              <button
-                onClick={resetRps}
-                className="rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-cyan-700 hover:text-cyan-700"
-              >
-                Reset Round
-              </button>
-            </div>
+              <div className="mt-8 flex flex-col items-center">
+                {winner ? (
+                  <p className="text-2xl font-black text-emerald-400">Winner: {winner}</p>
+                ) : isDraw ? (
+                  <p className="text-2xl font-black text-slate-400">Draw Game</p>
+                ) : (
+                  <p className="text-slate-300 text-lg">Turn: <span className="font-black">{isXNext ? 'X' : 'O'}</span></p>
+                )}
+                <button
+                  onClick={resetGame}
+                  className="mt-6 rounded-full border border-white/10 px-8 py-3 text-sm font-bold  hover:bg-white/5 transition-all"
+                >
+                  Reset Board
+                </button>
+              </div>
+            </article>
+          </BorderGlow>
 
-            <div className="mt-6 rounded-1.5rem border border-slate-200 bg-white p-4">
-              {!isRevealed ? (
-                <p className="text-sm leading-7 text-slate-600">
-                  Pick your move first. Once you reveal, both choices appear together and the winner is decided.
-                </p>
-              ) : roundWinner === 'Draw' ? (
-                <p className="text-lg font-bold text-slate-700">It&apos;s a draw. Both picked {userChoice}.</p>
-              ) : roundWinner === 'User' ? (
-                <p className="text-lg font-bold text-emerald-600">
-                  You win. {userChoice} beats {computerChoice}.
-                </p>
-              ) : (
-                <p className="text-lg font-bold text-rose-600">
-                  Computer wins. {computerChoice} beats {userChoice}.
-                </p>
-              )}
-            </div>
-          </article>
+          {/* GAME TWO: ROCK PAPER SCISSORS */}
+          <BorderGlow
+            glowColor="56 189 248"
+            backgroundColor="#1A1625"
+            borderRadius={32}
+            glowRadius={50}
+            colors={['#38bdf8', '#f472b6']}
+          >
+            <article className="p-8 h-full flex flex-col">
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Game Two</p>
+                <h3 className="mt-2 text-3xl font-black ">R-P-S</h3>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                {choices.map((choice) => (
+                  <motion.button
+                    key={choice}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleChoiceSelect(choice)}
+                    className={`rounded-2xl border-2 px-4 py-6 text-center transition-all ${userChoice === choice
+                        ? 'border-cyan-500 bg-cyan-500/20 '
+                        : 'border-white/5 bg-white/5 text-slate-400 hover:border-white/20'
+                      }`}
+                  >
+                    <p className="text-lg font-black">{choice}</p>
+                  </motion.button>
+                ))}
+              </div>
+
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                <div className="rounded-2xl bg-black/20 p-4 border border-white/5 text-center">
+                  <p className="text-[10px] font-bold uppercase text-slate-500 tracking-tighter">You</p>
+                  <p className="text-xl font-black  mt-1">{userChoice ?? '-'}</p>
+                </div>
+                <div className="rounded-2xl bg-black/20 p-4 border border-white/5 text-center">
+                  <p className="text-[10px] font-bold uppercase text-slate-500 tracking-tighter">CPU</p>
+                  <p className="text-xl font-black  mt-1">
+                    {isRevealed ? computerChoice : '???'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-auto pt-8">
+                <div className="flex gap-4">
+                  <button
+                    onClick={revealRound}
+                    disabled={!userChoice || isRevealed}
+                    className="flex-1 rounded-xl bg-white px-6 py-4 text-sm font-black hover:bg-cyan-400 transition-all disabled:opacity-100"
+                  >
+                    Reveal
+                  </button>
+                  <button
+                    onClick={resetRps}
+                    className="flex-1 rounded-xl border border-white/10 px-6 py-4 text-sm font-bold  hover:bg-white/5"
+                  >
+                    Reset
+                  </button>
+                </div>
+
+                <div className="mt-6 h-12 flex items-center justify-center">
+                  {isRevealed && (
+                    <motion.p
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      className={`text-xl font-black ${roundWinner === 'User' ? 'text-emerald-400' :
+                          roundWinner === 'Draw' ? 'text-slate-400' : 'text-rose-500'
+                        }`}
+                    >
+                      {roundWinner === 'Draw' ? "It's a Tie!" :
+                        roundWinner === 'User' ? "Victory!" : "CPU Wins!"}
+                    </motion.p>
+                  )}
+                </div>
+              </div>
+            </article>
+          </BorderGlow>
         </div>
       </div>
     </section>

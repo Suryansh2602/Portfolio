@@ -15,7 +15,7 @@ export const ProjectCard = ({ title, description, tags, isFeatured, variant = 'c
   return (
     <motion.div
       whileHover={{ y: -6 }}
-      className={`project-card project-card-${variant} group relative flex min-h-[24rem] w-[20rem] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-white/55 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.10)] transition-all hover:shadow-[0_30px_90px_rgba(15,23,42,0.18)] md:w-[24rem] ${
+      className={`project-card project-card-${variant} group relative flex min-h-[24rem] w-[20rem] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-white/55 p-6  md:w-[24rem] ${
         isFeatured
           ? 'project-card-featured bg-linear-to-br from-cyan-100 via-white to-amber-50 md:w-[30rem]'
           : 'bg-white/78 backdrop-blur-sm'

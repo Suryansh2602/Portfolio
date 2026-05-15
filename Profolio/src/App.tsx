@@ -1,11 +1,21 @@
 import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
 import './App.css';
+
+import Antigravity from './components/Antigravity';
 import { ContactDock } from './components/ContactDock';
 import { Game } from './components/Game';
 import { ProjectCard } from './components/ProjectCard';
+// import CardSwap, { Card } from './components/CardSwap';
+
+import { PROJECTS } from './config/data';
+
 import { Reveal } from './components/Reveal';
-import { EXPERIENCE, PROJECTS } from './config/data';
+
+import { Experience } from './sections/Experience';
+
+
 import { About } from './sections/About';
 import { Hero } from './sections/Hero';
 import { Skills } from './sections/Skills';
@@ -17,14 +27,21 @@ function App() {
     }
 
     const savedTheme = window.localStorage.getItem('portfolio-theme');
-    return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark';
+
+    return savedTheme === 'light' || savedTheme === 'dark'
+      ? savedTheme
+      : 'dark';
   });
+
   const [partyMode, setPartyMode] = useState(false);
 
   useEffect(() => {
     if (!partyMode) return;
 
-    const timer = window.setTimeout(() => setPartyMode(false), 7200);
+    const timer = window.setTimeout(() => {
+      setPartyMode(false);
+    }, 7200);
+
     return () => window.clearTimeout(timer);
   }, [partyMode]);
 
@@ -33,116 +50,195 @@ function App() {
   }, [theme]);
 
   return (
-    <main className={`page-shell min-h-screen ${theme === 'dark' ? 'theme-dark' : 'theme-light'} ${partyMode ? 'party-mode' : ''}`}>
+    <main
+      className={`page-shell min-h-screen ${
+        theme === 'dark' ? 'theme-dark' : 'theme-light'
+      } ${partyMode ? 'party-mode' : ''}`}
+    >
+      {/* =========================
+          FULLSCREEN BACKGROUND
+      ========================== */}
+
+      <div className="antigravity-background">
+        <Antigravity
+    count={300}
+    magnetRadius={6}
+    ringRadius={7}
+    waveSpeed={0.4}
+    waveAmplitude={1}
+    particleSize={1.5}
+    lerpSpeed={0.05}
+    color="#845b93"
+    autoAnimate
+    particleVariance={1}
+    rotationSpeed={0}
+    depthFactor={1}
+    pulseSpeed={3}
+    particleShape="sphere"
+    fieldStrength={10}
+/>
+      </div>
+
+      {/* =========================
+          OPTIONAL OVERLAYS
+      ========================== */}
+
       <div className="page-noise" />
       <div className="page-glow page-glow-one" />
       <div className="page-glow page-glow-two" />
+
       <div className="party-glow party-glow-one" />
       <div className="party-glow party-glow-two" />
 
-      <button
-        type="button"
-        onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
-        className="theme-toggle"
-        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-      >
-        {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-        <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
-      </button>
+      {/* =========================
+          ALL WEBSITE CONTENT
+      ========================== */}
 
-      <Hero />
+      <div className="page-content">
+        {/* THEME TOGGLE */}
 
-      <Reveal>
-        <About />
-      </Reveal>
+        <button
+          type="button"
+          onClick={() =>
+            setTheme((current) =>
+              current === 'light' ? 'dark' : 'light'
+            )
+          }
+          className="theme-toggle"
+          aria-label={`Switch to ${
+            theme === 'light' ? 'dark' : 'light'
+          } mode`}
+        >
+          {theme === 'light' ? (
+            <Moon size={18} />
+          ) : (
+            <Sun size={18} />
+          )}
 
-      <Reveal>
-        <section className="relative px-4 py-20">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-10 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-700">
-                Core Stack
-              </p>
-              <h2 className="mt-3 text-3xl font-bold md:text-4xl">Tools I use to ship reliable products</h2>
-              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-                The stack below keeps moving like a live queue, showing the technologies I use across backend,
-                frontend, security, and scalable system design.
-              </p>
-            </div>
-            <Skills />
-          </div>
-        </section>
-      </Reveal>
+          <span>
+            {theme === 'light'
+              ? 'Dark Mode'
+              : 'Light Mode'}
+          </span>
+        </button>
 
-      <Reveal>
-        <section className="relative px-4 py-20">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
+        {/* HERO */}
+
+        <Hero />
+
+        {/* ABOUT */}
+
+        <Reveal>
+          <About />
+        </Reveal>
+
+        {/* SKILLS */}
+
+        <Reveal>
+          <section className="relative px-4 py-20">
+            <div className="mx-auto max-w-6xl">
+              <div className="mb-10 text-center">
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-700">
-                  Selected Work
+                  Core Stack
                 </p>
-                <h2 className="mt-3 text-3xl font-bold md:text-4xl">Projects built around backend depth</h2>
+
+                <h2 className="mt-3 text-3xl font-bold md:text-4xl">
+                  Tools I use to ship reliable products
+                </h2>
+
+                <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+                  The stack below keeps moving like a live queue,
+                  showing the technologies I use across backend,
+                  frontend, security, and scalable system design.
+                </p>
               </div>
-              <p className="max-w-2xl text-sm leading-6 text-slate-600">
-                Swipe through the workbench. These are product ideas and backend-first builds shaped around scale, APIs, and clean developer flows.
-              </p>
+
+              <Skills />
             </div>
+          </section>
+        </Reveal>
 
-            <div className="carousel-shell">
-              <div className="carousel-fade carousel-fade-left" />
-              <div className="carousel-fade carousel-fade-right" />
+        {/* PROJECTS */}
 
-              <div className="carousel-track">
-              {PROJECTS.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  title={project.title}
-                  description={project.description}
-                  tags={project.tags}
-                  isFeatured={index === 0}
-                  variant={index % 3 === 1 ? 'amber' : index % 3 === 2 ? 'rose' : 'cyan'}
-                />
-              ))}
+        <Reveal>
+          <section className="relative px-4 py-20">
+            <div className="mx-auto max-w-6xl">
+              <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-700">
+                    Selected Work
+                  </p>
+
+                  <h2 className="mt-3 text-3xl font-bold md:text-4xl">
+                    Projects built around backend depth
+                  </h2>
+                </div>
+
+                <p className="max-w-2xl text-sm leading-6 text-slate-600">
+                  Swipe through the workbench. These are product
+                  ideas and backend-first builds shaped around
+                  scale, APIs, and clean developer flows.
+                </p>
+              </div>
+
+              <div className="carousel-shell">
+                <div className="carousel-fade carousel-fade-left" />
+                <div className="carousel-fade carousel-fade-right" />
+
+                <div className="carousel-track">
+                  {PROJECTS.map((project, index) => (
+                    <ProjectCard
+                      key={project.title}
+                      title={project.title}
+                      description={project.description}
+                      tags={project.tags}
+                      isFeatured={index === 0}
+                      variant={
+                        index % 3 === 1
+                          ? 'amber'
+                          : index % 3 === 2
+                          ? 'rose'
+                          : 'cyan'
+                      }
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </Reveal>
+          </section>
+        </Reveal>
 
-      <Reveal>
-        <section className="relative px-4 py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-10 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-700">
-                Experience
-              </p>
-              <h2 className="mt-3 text-3xl font-bold md:text-4xl">Full-time work and freelance delivery</h2>
-            </div>
+        <Experience/>
+        {/* <div style={{ height: '600px', position: 'relative' }}> */}
+  {/* <CardSwap
+    cardDistance={80}
+    verticalDistance={70}
+    delay={5000}
+    pauseOnHover={false}
+  >
+    <Card>
+      <h3>Card 1</h3>
+      <p>Your content here</p>
+    </Card>
+    <Card>
+      <h3>Card 2</h3>
+      <p>Your content here</p>
+    </Card>
+    <Card>
+      <h3>Card 3</h3>
+      <p>Your content here</p>
+    </Card>
+  </CardSwap>
+</div> */}
 
-            <div className="space-y-6">
-              {EXPERIENCE.map((item) => (
-                <article
-                  key={`${item.company}-${item.role}`}
-                  className="rounded-[2rem] border border-white/50 bg-white/75 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm"
-                >
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900">{item.role}</h3>
-                      <p className="text-sm font-medium text-slate-600">{item.company}</p>
-                    </div>
-                    <p className="text-sm font-semibold text-cyan-700">{item.duration}</p>
-                  </div>
-                  <p className="mt-4 leading-7 text-slate-600">{item.details}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      </Reveal>
+        {/* GAME */}
 
-      <Game onCelebrate={() => setPartyMode(true)} />
-      <ContactDock />
+        <Game onCelebrate={() => setPartyMode(true)} />
+
+        {/* CONTACT */}
+
+        <ContactDock />
+      </div>
     </main>
   );
 }
