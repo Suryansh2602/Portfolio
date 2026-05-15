@@ -85,11 +85,15 @@ export const Hero = () => {
           <div className="hero-grid-lines" />
 
           <div className="hero-services-head">
-            <img
-              src={profilePhoto}
-              alt="Portrait of Suryansh Pushpkar"
-              className="hero-portrait hero-portrait-large"
-            />
+            <div className="hero-portrait-ring" aria-hidden="true">
+              <div className="hero-portrait-ring-core">
+                <img
+                  src={profilePhoto}
+                  alt="Portrait of Suryansh Pushpkar"
+                  className="hero-portrait hero-portrait-large"
+                />
+              </div>
+            </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-700">What I Can Help With</p>
               <h3 className="mt-2 text-3xl font-black text-slate-950">Services that teams actually need</h3>
