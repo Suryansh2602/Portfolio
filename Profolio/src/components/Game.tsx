@@ -302,11 +302,11 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
             </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+              <div className="rounded-1.5rem border border-slate-200 bg-slate-50 p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Your Choice</p>
                 <p className="mt-3 text-xl font-black text-slate-950">{userChoice ?? 'Waiting for selection'}</p>
               </div>
-              <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+              <div className="rounded-1.5rem border border-slate-200 bg-slate-50 p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Computer Choice</p>
                 <p className="mt-3 text-xl font-black text-slate-950">
                   {isRevealed ? computerChoice : 'Hidden until reveal'}
@@ -330,7 +330,7 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
               </button>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-white p-4">
+            <div className="mt-6 rounded-1.5rem border border-slate-200 bg-white p-4">
               {!isRevealed ? (
                 <p className="text-sm leading-7 text-slate-600">
                   Pick your move first. Once you reveal, both choices appear together and the winner is decided.

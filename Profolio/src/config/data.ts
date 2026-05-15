@@ -7,21 +7,11 @@ export interface Project {
 }
 
 export const SKILLS: string[] = [
-  "Java", "Spring Boot", "Microservices", "React", 
+  "Java", "Spring Boot", "Microservices", "React", "Git",
   "TypeScript", "PostgreSQL", "Tailwind CSS", "JWT/OAuth"
 ];
 
 export const PROJECTS: Project[] = [
-  {
-    title: "Library Management System",
-    description: "A servlet-based library application for managing books, records, user activity, and core circulation flows in a structured backend-driven setup.",
-    tags: ["Java", "Servlet", "JSP", "MySQL"],
-  },
-  {
-    title: "Banking Transaction Management System",
-    description: "A Java Swing desktop application where each transaction is unique and secured, with records maintained across deposits, withdrawals, transfers, and other banking operations.",
-    tags: ["Java", "Swing", "Desktop Application", "Transaction Security"],
-  },
   {
     title: "UrbanEats",
     description: "A microservices-based food delivery application architecture designed around service boundaries, API communication, and scalable backend thinking.",
@@ -31,6 +21,16 @@ export const PROJECTS: Project[] = [
     title: "FriendBook",
     description: "A social media platform featuring authentication, Spring Security, and full-stack interaction flows.",
     tags: ["Spring Boot", "Spring Security", "React"],
+  },
+  {
+    title: "Banking Transaction Management System",
+    description: "A Java Swing desktop application where each transaction is unique and secured, with records maintained across deposits, withdrawals, transfers, and other banking operations.",
+    tags: ["Java", "Swing", "Desktop Application", "Transaction Security"],
+  },
+  {
+    title: "Library Management System",
+    description: "A servlet-based library application for managing books, records, user activity, and core circulation flows in a structured backend-driven setup.",
+    tags: ["Java", "Servlet", "JSP", "MySQL"],
   },
 ];
 
