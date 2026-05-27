@@ -7,7 +7,7 @@ export interface Project {
 }
 
 export const SKILLS: string[] = [
-  "Java", "Spring Boot", "Microservices", "React", "Git",
+  "Java", "Spring Boot", "Microservices", "React", "Git", "Spring Security",
   "TypeScript", "PostgreSQL", "Tailwind CSS", "JWT/OAuth"
 ];
 
