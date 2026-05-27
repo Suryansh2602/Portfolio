@@ -36,16 +36,22 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCE = [
   {
-    role: "Trainee",
-    company: "InfoBeans Foundation",
-    duration: "Training Program",
-    details: "Received industry-oriented training focused on software development fundamentals, delivery mindset, and practical implementation."
+    role: "Software Developer",
+    company: "Webkorps",
+    duration: "Feb 2026 - Present",
+    details: "Currently working on international projects, contributing to enterprise backend solutions and delivery for global client requirements."
   },
   {
     role: "Trainee",
     company: "InfoBeans",
     duration: "Industry Training",
     details: "Trained in a professional MNC environment with exposure to modern engineering practices, code quality, and real-world development expectations."
+  },
+  {
+    role: "Trainee",
+    company: "InfoBeans Foundation",
+    duration: "Training Program",
+    details: "Received industry-oriented training focused on software development fundamentals, delivery mindset, and practical implementation."
   },
   {
     role: "Software Developer Intern",
@@ -58,11 +64,5 @@ export const EXPERIENCE = [
     company: "Independent Clients",
     duration: "Freelance Projects",
     details: "Delivered software projects for different clients, turning business requirements into working backend and full-stack solutions."
-  },
-  {
-    role: "Software Developer",
-    company: "Webkorps",
-    duration: "Feb 2026 - Present",
-    details: "Currently working on international projects, contributing to enterprise backend solutions and delivery for global client requirements."
   },
 ];
