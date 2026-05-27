@@ -23,14 +23,14 @@ export const PROJECTS: Project[] = [
     tags: ["Spring Boot", "Spring Security", "React"],
   },
   {
-    title: "Banking Transaction Management System",
-    description: "A Java Swing desktop application where each transaction is unique and secured, with records maintained across deposits, withdrawals, transfers, and other banking operations.",
-    tags: ["Java", "Swing", "Desktop Application", "Transaction Security"],
-  },
-  {
     title: "Library Management System",
     description: "A servlet-based library application for managing books, records, user activity, and core circulation flows in a structured backend-driven setup.",
     tags: ["Java", "Servlet", "JSP", "MySQL"],
+  },
+  {
+    title: "Banking Transaction Management System",
+    description: "A Java Swing desktop application where each transaction is unique and secured, with records maintained across deposits, withdrawals, transfers, and other banking operations.",
+    tags: ["Java", "Swing", "Desktop Application", "Transaction Security"],
   },
 ];
 
