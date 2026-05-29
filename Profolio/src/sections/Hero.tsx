@@ -20,10 +20,10 @@ const services = [
     detail: 'Architecture reviews, cleanup plans, performance fixes, and practical technical guidance.',
   },
 
-  {
-    title: 'Technical Mentorship',
-    detail: 'Guidance on backend best practices, system design, and building production-ready products.',
-  }
+  // {
+  //   title: 'Technical Mentorship',
+  //   detail: 'Guidance on backend best practices, system design, and building production-ready products.',
+  // }
 ];
 
 export const Hero = () => {

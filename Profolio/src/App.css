@@ -385,8 +385,8 @@
 }
 
 .hero-portrait-large {
-  width: 11.5rem;
-  height: 13.5rem;
+  width: 10rem;
+  height: 10rem;
   box-shadow: 20px 15px 26px rgba(71, 99, 125, 0.44);
 }
 
@@ -414,7 +414,7 @@
   content: "";
   position: absolute;
   /* Inset by 0, but we use padding to create the 1px border thickness */
-  inset: 5px;
+  /* inset: 5px; */
   padding: 1px;
   border-radius: 1rem;
 
