@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import profilePhoto from '../assets/{2E6CF1C9-643E-4572-9B0E-280814498F85}.png';
+import profilePhoto from '../assets/removebg-preview.png';
 import { openWhatsApp } from '../utils/whatsapp';
 
 
@@ -48,7 +48,7 @@ export const Hero = () => {
             Freelance + full-time software delivery
           </div>
 
-          <p className="mb-3 font-mono text-sm uppercase tracking-[0.35em] text-cyan-700">Hi, my name is</p>
+          <p className="mb-3 font-mono text-sm uppercase tracking-[0.55em] text-cyan-600">Hi, my name is</p>
           <h1 className="text-6xl font-black tracking-tight text-slate-950 md:text-8xl">
             Suryansh
           </h1>

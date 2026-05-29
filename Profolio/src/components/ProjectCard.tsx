@@ -15,11 +15,10 @@ export const ProjectCard = ({ title, description, tags, isFeatured, variant = 'c
   return (
     <motion.div
       whileHover={{ y: -6 }}
-      className={`project-card project-card-${variant} group relative flex min-h-[24rem] w-[20rem] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-white/55 p-6  md:w-[24rem] ${
-        isFeatured
-          ? 'project-card-featured bg-linear-to-br from-cyan-100 via-white to-amber-50 md:w-[30rem]'
+      className={`project-card project-card-${variant} group relative flex min-h-24rem w-[20rem] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] border border-white/55 p-6  md:w-[24rem] ${isFeatured
+          ? 'project-card-featured bg-linear-to-br from-cyan-100 via-white to-amber-50 md:w-30rem'
           : 'bg-white/78 backdrop-blur-sm'
-      }`}
+        }`}
     >
       <div className="project-card-overlay absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <div className="project-card-orb absolute -right-12 top-8 h-28 w-28 rounded-full blur-2xl" />
@@ -36,7 +35,7 @@ export const ProjectCard = ({ title, description, tags, isFeatured, variant = 'c
         <h3 className="mb-3 text-2xl font-black text-slate-900">{title}</h3>
         <p className="mb-6 text-sm leading-7 text-slate-600">{description}</p>
       </div>
-      
+
       <div className="relative z-10 flex flex-wrap gap-2">
         {tags.map((tag) => (
           <span

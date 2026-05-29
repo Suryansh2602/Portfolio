@@ -51,7 +51,7 @@ export const About = () => {
 
       {/* background glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-400/10 blur-[140px]" />
+        <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-300/60 blur-[140px]" />
         <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-purple-400/10 blur-[140px]" />
       </div>
 
@@ -59,7 +59,7 @@ export const About = () => {
 
         {/* heading */}
         <div className="mb-14 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.35em] text-cyan-600/80">
+          <p className="text-xs font-bold uppercase tracking-[0.35em] text-cyan-200/80">
             About Me
           </p>
 
@@ -117,8 +117,8 @@ export const About = () => {
                   key={i}
                   onClick={() => setActive(i)}
                   className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === active
-                      ? 'bg-cyan-500 scale-125'
-                      : 'bg-slate-300/70'
+                    ? 'bg-cyan-500 scale-125'
+                    : 'bg-slate-300/70'
                     }`}
                 />
               ))}

@@ -364,37 +364,77 @@
 .theme-dark .carousel-fade-right {
   background: linear-gradient(270deg, #0f172a 12%, rgba(15, 23, 42, 0));
 }
-
 .hero-portrait {
   display: block;
-  width: 7rem;
-  height: 7rem;
+  /* width: 7rem;
+  height: 7rem; */
   object-fit: cover;
-  border-radius: 9999px;
-  border: 4px solid rgba(255, 255, 255, 0.92);
+  border-radius: 10%;
+
+  /* FIXED: 'theme(--blur-3xl)' is invalid CSS syntax for a border.
+    To make a border fade, we use border-image with a gradient.
+    We fade the white color from 92% opacity down to 0% opacity.
+  */
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0)
+    )
+    1;
 }
 
 .hero-portrait-large {
-  width: 5.5rem;
-  height: 5.5rem;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  width: 11.5rem;
+  height: 13.5rem;
+  box-shadow: 20px 15px 26px rgba(71, 99, 125, 0.44);
 }
 
 .hero-services-panel {
   position: relative;
   overflow: hidden;
-  border-radius: 2rem;
-  border: 1px solid var(--surface-border);
-  padding: 1.5rem;
+  padding: 2rem;
+  border-radius: 1rem;
+
+  /* 1. Establish a stacking context so the fake border stays behind the text */
+  z-index: 1;
+
+  /* Your original background gradients */
   background:
     radial-gradient(
       circle at top left,
-      rgba(103, 232, 249, 0.16),
-      transparent 28%
+      rgba(58, 102, 129, 0.216),
+      transparent 80%
     ),
-    linear-gradient(180deg, var(--surface-strong), var(--surface-bg));
-  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
-  backdrop-filter: blur(14px);
+    linear-gradient(180deg, var(--surface-bg), var(--surface-bg));
+}
+
+/* 2. The Pseudo-element that creates the perfect faded border */
+.hero-services-panel::before {
+  content: "";
+  position: absolute;
+  /* Inset by 0, but we use padding to create the 1px border thickness */
+  inset: 0px;
+  padding: 1px;
+  border-radius: 1rem;
+
+  /* The gradient fades from your border color to your background color, blending it away */
+  background: linear-gradient(
+    to bottom,
+    var(--surface-border),
+    var(--surface-bg)
+  );
+
+  /* This forces the gradient to only show through the 1px padding area */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  /* Push it directly behind the panel content */
+  z-index: -1;
+  pointer-events: none;
 }
 
 .hero-grid-motion {
@@ -402,7 +442,7 @@
   border-radius: 9999px;
   filter: blur(80px);
   pointer-events: none;
-  opacity: 0.52;
+  opacity: 0.5;
 }
 
 .hero-grid-motion-one {
@@ -411,7 +451,7 @@
   width: 15rem;
   height: 15rem;
   background: rgba(34, 211, 238, 0.22);
-  /* animation: heroFloat 14s ease-in-out infinite; */
+  animation: heroFloat 14s ease-in-out infinite;
 }
 
 .hero-grid-motion-two {
@@ -520,11 +560,7 @@
   overflow: hidden;
   border-radius: 999px;
   border: 5px solid
-    linear-gradient(
-      90deg,
-      rgba(241, 37, 227, 0.61),
-      rgba(178, 157, 231, 0.153)
-    );
+    linear-gradient(90deg, rgba(241, 37, 227, 0.61), rgba(178, 157, 231, 0.153));
   width: 100%;
   /* border: 1px solid var(--surface-border); */
   /* background: var(--surface-bg); */
@@ -607,7 +643,7 @@
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(1rem, -1.5rem, 0) scale(1.08);
+    transform: translate3d(1rem, -1.5rem, 0) scale(1.8);
   }
 }
 
@@ -623,10 +659,10 @@
 @keyframes heroFloat {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(2);
   }
   50% {
-    transform: translate3d(18px, -20px, 0) scale(1.08);
+    transform: translate3d(18px, -20px, 0) scale(2.08);
   }
 }
 
@@ -663,10 +699,10 @@
 
 @keyframes partyFloat {
   0% {
-    transform: scale(1) translate3d(0, 0, 0);
+    transform: scale(2) translate3d(0, 0, 0);
   }
   100% {
-    transform: scale(1.12) translate3d(0, -18px, 0);
+    transform: scale(2.08) translate3d(0, -18px, 0);
   }
 }
 
