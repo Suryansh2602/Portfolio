@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import profilePhoto from '../assets/PFP.png';
+import profilePhoto from '../assets/removebg-preview.png';
 import { openWhatsApp } from '../utils/whatsapp';
 
 const services = [
