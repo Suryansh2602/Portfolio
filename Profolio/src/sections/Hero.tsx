@@ -2,8 +2,6 @@ import { motion } from 'framer-motion';
 import profilePhoto from '../assets/removebg-preview.png';
 import { openWhatsApp } from '../utils/whatsapp';
 
-
-
 const services = [
   {
     title: 'Backend Architecture',
@@ -21,6 +19,11 @@ const services = [
     title: 'Consulting and Debugging',
     detail: 'Architecture reviews, cleanup plans, performance fixes, and practical technical guidance.',
   },
+
+  {
+    title: 'Technical Mentorship',
+    detail: 'Guidance on backend best practices, system design, and building production-ready products.',
+  }
 ];
 
 export const Hero = () => {

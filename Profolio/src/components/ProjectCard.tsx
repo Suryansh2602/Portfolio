@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion';
 import { Code } from 'lucide-react';
 
-
 interface ProjectProps {
   title: string;
   description: string;

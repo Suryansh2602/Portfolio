@@ -15,7 +15,6 @@ import { Reveal } from './components/Reveal';
 
 import { Experience } from './sections/Experience';
 
-
 import { About } from './sections/About';
 import { Hero } from './sections/Hero';
 import { Skills } from './sections/Skills';
@@ -32,7 +31,7 @@ function App() {
       ? savedTheme
       : 'dark';
   });
-
+  
   const [partyMode, setPartyMode] = useState(false);
 
   useEffect(() => {
