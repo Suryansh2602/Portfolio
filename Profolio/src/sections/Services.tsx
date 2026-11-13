@@ -5,11 +5,11 @@ import { SERVICES } from '../config/data';
 
 export const Services = () => {
   return (
-    <section id="services" className="py-28 md:py-40">
+    <section id="services" className="py-14 md:py-20">
       <div className="container-x">
-        <SectionLabel index="02">Services</SectionLabel>
+        <SectionLabel index="03">Services</SectionLabel>
 
-        <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-12">
+        <div className="mt-8 grid gap-6 md:mt-10 md:grid-cols-12">
           <h2 className="display-lg md:col-span-8">
             <MaskLine>What I can</MaskLine>
             <MaskLine delay={0.08}>
@@ -23,7 +23,7 @@ export const Services = () => {
           </FadeIn>
         </div>
 
-        <ul className="mt-16 border-t border-line md:mt-20">
+        <ul className="mt-10 border-t border-line md:mt-12">
           {SERVICES.map((service, index) => (
             <li key={service.title} className="group relative overflow-hidden border-b border-line">
               {/* Accent wash that rises from the bottom on hover */}
@@ -33,7 +33,7 @@ export const Services = () => {
               />
               <FadeIn
                 delay={index * 0.05}
-                className="relative grid gap-3 px-1 py-8 transition-colors duration-500 group-hover:text-on-accent md:grid-cols-12 md:items-center md:px-4 md:py-10"
+                className="relative grid gap-3 px-1 py-6 transition-colors duration-500 group-hover:text-on-accent md:grid-cols-12 md:items-center md:px-4 md:py-8"
               >
                 <span className="label transition-colors duration-500 group-hover:text-on-accent md:col-span-1">
                   0{index + 1}

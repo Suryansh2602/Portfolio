@@ -76,12 +76,12 @@ function App() {
       <main>
         <Hero ready={loaded} />
         <About />
+        <Contact />
         <Skills />
         <Services />
-        <Work />
-        <Contact />
-        <Experience />
         <Process />
+        <Work />
+        <Experience />
         <Game />
       </main>
 

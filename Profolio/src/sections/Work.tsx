@@ -6,7 +6,7 @@ import { PROJECTS, SOCIAL_LINKS, type Project } from '../config/data';
 
 const ProjectRow = ({ project, index }: { project: Project; index: number }) => {
   const content = (
-    <FadeIn className="grid gap-5 py-10 md:grid-cols-12 md:gap-6 md:py-14">
+    <FadeIn className="grid gap-5 py-8 md:grid-cols-12 md:gap-6 md:py-10">
       <span className="label pt-2 md:col-span-1">{String(index + 1).padStart(2, '0')}</span>
 
       <div className="md:col-span-6">
@@ -61,20 +61,20 @@ const ProjectRow = ({ project, index }: { project: Project; index: number }) => 
 
 export const Work = () => {
   return (
-    <section id="work" className="py-28 md:py-40">
+    <section id="work" className="py-14 md:py-20">
       <div className="container-x">
-        <SectionLabel index="03" aside={`${String(PROJECTS.length).padStart(2, '0')} Projects`}>
+        <SectionLabel index="05" aside={`${String(PROJECTS.length).padStart(2, '0')} Projects`}>
           Selected work
         </SectionLabel>
 
-        <h2 className="display-lg mt-12 md:mt-16">
+        <h2 className="display-lg mt-8 md:mt-10">
           <MaskLine>Things I've</MaskLine>
           <MaskLine delay={0.08}>
             <span className="serif-accent">built</span>
           </MaskLine>
         </h2>
 
-        <ul className="mt-16 border-t border-line md:mt-20">
+        <ul className="mt-10 border-t border-line md:mt-12">
           {PROJECTS.map((project, index) => (
             <ProjectRow key={project.title} project={project} index={index} />
           ))}

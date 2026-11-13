@@ -5,18 +5,18 @@ import { EXPERIENCE } from '../config/data';
 
 export function Experience() {
   return (
-    <section id="experience" className="py-28 md:py-40">
+    <section id="experience" className="py-14 md:py-20">
       <div className="container-x">
-        <SectionLabel index="05">Experience</SectionLabel>
+        <SectionLabel index="06">Experience</SectionLabel>
 
-        <h2 className="display-lg mt-12 md:mt-16">
+        <h2 className="display-lg mt-8 md:mt-10">
           <MaskLine>Where I've</MaskLine>
           <MaskLine delay={0.08}>
             <span className="serif-accent">worked</span>
           </MaskLine>
         </h2>
 
-        <ol className="mt-16 border-t border-line md:mt-20">
+        <ol className="mt-10 border-t border-line md:mt-12">
           {EXPERIENCE.map((item, index) => (
             <li key={`${item.company}-${item.role}`} className="border-b border-line">
               <FadeIn delay={index * 0.04} className="grid gap-3 py-8 md:grid-cols-12 md:gap-6 md:py-10">

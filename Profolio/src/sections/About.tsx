@@ -21,14 +21,14 @@ const slides = [
 ];
 
 const facts = [
-  { label: 'Currently', value: 'Software Developer, Webkorps' },
+  { label: 'Clients', value: 'US clients & US-based projects' },
+  { label: 'Domains', value: 'US defence, banking, IT & application management' },
   { label: 'Focus', value: 'Backend architecture & microservices' },
   { label: 'Core stack', value: 'Java, Spring Boot, React' },
-  { label: 'Previously', value: 'InfoBeans, Calance International' },
 ];
 
 const INTRO =
-  "I'm Suryansh, a software developer at Webkorps. I build the parts of a product people don't see: APIs, services, auth flows and data models, so the parts they do see feel fast and dependable. Alongside full-time work, I take on freelance builds for clients who value clean engineering and clear communication.";
+  "I'm Suryansh, a backend and full-stack developer. I build the parts of a product people don't see: APIs, services, auth flows and data models, so the parts they do see feel fast and dependable. I've worked with US clients on US defence, banking, and IT and application management projects, and I take on freelance builds for teams who value clean engineering and clear communication.";
 
 export const About = () => {
   const [active, setActive] = useState(0);
@@ -42,11 +42,11 @@ export const About = () => {
   }, []);
 
   return (
-    <section id="about" className="py-28 md:py-40">
+    <section id="about" className="py-14 md:py-20">
       <div className="container-x">
         <SectionLabel index="01">About</SectionLabel>
 
-        <div className="mt-12 grid gap-12 md:mt-16 md:grid-cols-12 md:gap-8">
+        <div className="mt-8 grid gap-12 md:mt-10 md:grid-cols-12 md:gap-8">
           <FadeIn className="md:col-span-5">
             {/* Photos are mixed landscape/square/portrait, so each keeps its own ratio inside a square frame */}
             <div className="relative grid aspect-square place-items-center overflow-hidden bg-bg-elevated p-3">
@@ -84,9 +84,12 @@ export const About = () => {
           </FadeIn>
 
           <div className="md:col-span-7 md:pl-8">
-            <ScrollWords className="display-md" text={INTRO} />
+            <ScrollWords
+              className="text-2xl font-medium leading-[1.2] tracking-[-0.025em] md:text-[2rem]"
+              text={INTRO}
+            />
 
-            <dl className="mt-16 grid gap-x-8 gap-y-8 sm:grid-cols-2">
+            <dl className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2">
               {facts.map((fact, index) => (
                 <FadeIn key={fact.label} delay={index * 0.06} className="border-t border-line pt-4">
                   <dt className="label">{fact.label}</dt>

@@ -79,7 +79,7 @@ export const Game = () => {
   const ticTacToeStatus = winner ? `Winner — ${winner}` : isDraw ? 'Draw game' : `Turn — ${isXNext ? 'X' : 'O'}`;
 
   return (
-    <section id="play" className="py-28 md:py-40">
+    <section id="play" className="py-14 md:py-20">
       <AnimatePresence>
         {showCelebration && (
           <motion.div
@@ -140,7 +140,7 @@ export const Game = () => {
       <div className="container-x">
         <SectionLabel index="07">Off the clock</SectionLabel>
 
-        <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-12">
+        <div className="mt-8 grid gap-6 md:mt-10 md:grid-cols-12">
           <h2 className="display-lg md:col-span-8">
             <MaskLine>Take a</MaskLine>
             <MaskLine delay={0.08}>
@@ -152,7 +152,7 @@ export const Game = () => {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-px border border-line bg-line md:mt-20 lg:grid-cols-2">
+        <div className="mt-10 grid gap-px border border-line bg-line md:mt-12 lg:grid-cols-2">
           {/* GAME ONE: TIC TAC TOE */}
           <article className="flex flex-col bg-bg p-6 md:p-10">
             <div className="flex items-baseline justify-between">

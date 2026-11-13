@@ -29,6 +29,7 @@ export const MaskLine = ({ children, delay = 0, play, className = '' }: MaskLine
         transition={{ duration: 1, ease: EASE, delay }}
       >
         {children}
+        {/* Trailing space keeps words apart when the text is copied or read as plain text */}{' '}
       </motion.span>
     </span>
   );

@@ -9,6 +9,7 @@ import { MaskLine } from './MaskLine';
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Services', href: '#services' },
+  { label: 'Process', href: '#process' },
   { label: 'Work', href: '#work' },
   { label: 'Experience', href: '#experience' },
   { label: 'Contact', href: '#contact' },
