@@ -1,26 +1,31 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
+import { SectionHeading } from '../components/SectionHeading';
+import { SOCIAL_LINKS } from '../config/data';
 
-import slideOne from '../assets/WhatsApp Image 2026-05-06 at 2.02.54 AM.jpeg';
-import slideTwo from '../assets/WhatsApp Image 2026-05-06 at 2.02.55 AM (1).jpeg';
-import slideThree from '../assets/WhatsApp Image 2026-05-06 at 2.02.56 AM (2).jpeg';
-import slideFour from '../assets/WhatsApp Image 2026-05-06 at 2.02.57 AM.jpeg';
+import slideOne from '../assets/about-1.jpeg';
+import slideTwo from '../assets/about-2.jpeg';
+import slideThree from '../assets/about-3.jpeg';
+import slideFour from '../assets/about-4.jpeg';
 
 const profiles = [
   {
-    name: 'GitHub',
-    handle: '@Suryansh2602',
-    url: 'https://github.com/Suryansh2602',
+    name: SOCIAL_LINKS.github.label,
+    handle: SOCIAL_LINKS.github.handle,
+    url: SOCIAL_LINKS.github.url,
+    Icon: GitHubIcon,
     blurb:
       'Public code, backend systems, architecture experiments, and production builds.',
     tint: 'from-slate-950 via-slate-800 to-slate-700',
     pills: ['Repositories', 'Backend', 'Java', 'Spring Boot'],
   },
   {
-    name: 'LinkedIn',
-    handle: 'suryansh-pushpkar',
-    url: 'https://linkedin.com/in/suryansh-pushpkar',
+    name: SOCIAL_LINKS.linkedin.label,
+    handle: SOCIAL_LINKS.linkedin.handle,
+    url: SOCIAL_LINKS.linkedin.url,
+    Icon: LinkedInIcon,
     blurb:
       'Professional experience, freelance delivery, and real-world collaboration.',
     tint: 'from-cyan-700 via-sky-600 to-blue-500',
@@ -47,29 +52,23 @@ export const About = () => {
   }, []);
 
   return (
-    <section className="relative px-4 py-24 overflow-hidden">
+    <section id="about" className="relative px-4 py-24 overflow-hidden">
 
       {/* background glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-300/60 blur-[140px]" />
+        <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-300/15 blur-[140px]" />
         <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-purple-400/10 blur-[140px]" />
       </div>
 
       <div className="mx-auto max-w-6xl relative">
 
         {/* heading */}
-        <div className="mb-14 text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.35em] text-cyan-200/80">
-            About Me
-          </p>
-
-          <h2 className="mt-4 text-3xl md:text-5xl font-black text-slate-900">
-            Developer Profile with <span className="text-cyan-500">Real Impact</span>
-          </h2>
-
-          <p className="mt-4 max-w-2xl mx-auto text-sm leading-7 text-slate-600">
-            Full-stack engineering experience with freelance delivery and production-grade backend systems.
-          </p>
+        <div className="mb-14">
+          <SectionHeading
+            eyebrow="About Me"
+            title={<>Developer profile with <span className="text-cyan-500">real impact</span></>}
+            description="Full-stack engineering experience with freelance delivery and production-grade backend systems."
+          />
         </div>
 
         {/* SLIDESHOW */}
@@ -103,7 +102,7 @@ export const About = () => {
               Showcase
             </p>
 
-            <h3 className="mt-3 text-2xl font-black text-slate-900">
+            <h3 className="mt-3 text-2xl font-bold tracking-tight text-slate-900">
               Visual journey of growth
             </h3>
 
@@ -115,6 +114,9 @@ export const About = () => {
               {slides.map((_, i) => (
                 <button
                   key={i}
+                  type="button"
+                  aria-label={`Show photo ${i + 1}`}
+                  aria-current={i === active}
                   onClick={() => setActive(i)}
                   className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === active
                     ? 'bg-cyan-500 scale-125'
@@ -139,7 +141,9 @@ export const About = () => {
               className="relative rounded-3xl overflow-hidden bg-white/10 backdrop-blur-xl shadow-inner group"
             >
 
-              <div className={`h-28 bg-gradient-to-r ${p.tint}`} />
+              <div className={`flex h-28 items-end bg-linear-to-r p-6 text-white ${p.tint}`}>
+                <p.Icon size={28} />
+              </div>
 
               <div className="p-6">
 
@@ -149,7 +153,7 @@ export const About = () => {
                       {p.name}
                     </p>
 
-                    <h3 className="text-xl font-black text-slate-900 mt-1">
+                    <h3 className="text-xl font-bold text-slate-900 mt-1">
                       {p.handle}
                     </h3>
 
@@ -162,6 +166,7 @@ export const About = () => {
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open ${p.name}`}
                     className="p-3 rounded-full bg-white/20 hover:bg-white/30 transition"
                   >
                     <ExternalLink size={18} />

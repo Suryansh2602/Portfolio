@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { EXPERIENCE } from '../config/data';
 import { Reveal } from '../components/Reveal';
+import { SectionHeading } from '../components/SectionHeading';
 
 export function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -15,31 +16,22 @@ export function Experience() {
 
     return (
         <section
+            id="experience"
             ref={containerRef}
-            className="relative px-4 py-28 overflow-hidden"
+            className="relative px-4 py-24 overflow-hidden"
         >
 
 
             <div className="mx-auto max-w-5xl relative">
 
                 {/* HEADER */}
-                <div className="mb-20 text-center">
+                <div className="mb-20">
                     <Reveal>
-                        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-500/80">
-                            Career Timeline
-                        </p>
-                    </Reveal>
-
-                    <Reveal>
-                        <h2 className="mt-4 text-4xl md:text-5xl font-black text-slate-900">
-                            Experience that builds products
-                        </h2>
-                    </Reveal>
-
-                    <Reveal>
-                        <p className="mt-4 text-sm text-slate-500 max-w-xl mx-auto">
-                            A smooth scroll journey through my engineering experience.
-                        </p>
+                        <SectionHeading
+                            eyebrow="Career Timeline"
+                            title="Experience that builds products"
+                            description="Where I've worked, trained, and delivered: from enterprise teams to independent clients."
+                        />
                     </Reveal>
                 </div>
 
@@ -115,7 +107,7 @@ export function Experience() {
                                         <div className="flex items-start justify-between gap-4">
 
                                             <div>
-                                                <h3 className="text-xl md:text-2xl font-black text-slate-900 group-hover:text-cyan-500 transition-colors">
+                                                <h3 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-cyan-500 transition-colors">
                                                     {item.role}
                                                 </h3>
 

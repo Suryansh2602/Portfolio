@@ -1,6 +1,9 @@
 /* src/index.css */
 @import "tailwindcss";
 
+/* The theme toggle sets .theme-dark on <main>, so dark: utilities key off that class */
+@custom-variant dark (&:where(.theme-dark, .theme-dark *));
+
 @layer base {
   :root {
     font-family: "Sora", "Segoe UI", sans-serif;
@@ -10,6 +13,12 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Keep anchored sections clear of the fixed navbar */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 4.5rem;
   }
 
   body {

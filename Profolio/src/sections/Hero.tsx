@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion';
+import { ArrowRight, Mail } from 'lucide-react';
 import profilePhoto from '../assets/removebg-preview.png';
+import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
+import { SOCIAL_LINKS } from '../config/data';
 import { openWhatsApp } from '../utils/whatsapp';
 
 const services = [
@@ -28,16 +31,16 @@ const services = [
 
 export const Hero = () => {
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden px-4 py-24">
+    <section id="home" className="relative flex min-h-screen items-center overflow-hidden px-4 pb-24 pt-32">
       <motion.div
         animate={{ x: [0, 20, -10, 0], y: [0, -24, 12, 0] }}
         transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute left--8rem top-20 h-72 w-72 rounded-full bg-cyan-300/30 blur-3xl"
+        className="absolute -left-32 top-20 h-72 w-72 rounded-full bg-cyan-300/20 blur-3xl"
       />
       <motion.div
         animate={{ scale: [1, 1.15, 1], rotate: [0, 8, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute right--4rem top-12 h-96 w-96 rounded-full bg-amber-200/35 blur-3xl"
+        className="absolute -right-16 top-12 h-96 w-96 rounded-full bg-amber-200/20 blur-3xl"
       />
 
       <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
@@ -47,41 +50,58 @@ export const Hero = () => {
           transition={{ duration: 0.7 }}
           className="text-center lg:text-left"
         >
-          <div className="mb-6 inline-flex rounded-full border border-cyan-950/10 bg-white/75 px-4 py-2 text-sm font-semibold text-cyan-800 shadow-sm backdrop-blur-sm">
-            Freelance + full-time software delivery
+          <div className="hero-status mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            Software Developer at Webkorps · Open to freelance
           </div>
 
-          <p className="mb-3 font-mono text-sm uppercase tracking-[0.55em] text-cyan-600">Hi, my name is</p>
-          <h1 className="text-6xl font-black tracking-tight text-slate-950 md:text-8xl">
-            Suryansh
+          <p className="mb-3 font-mono text-sm uppercase tracking-[0.4em] text-cyan-600">Hi, my name is</p>
+          <h1 className="text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
+            Suryansh Pushpkar
           </h1>
-          <h2 className="mt-1 text-4xl font-black tracking-tight text-slate-700 md:text-6xl">
-            Pushpkar
-          </h2>
-
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 lg:mx-0">
-            I build backend-heavy products, full-stack applications, and scalable systems for teams
-            and clients who want clean engineering and confident delivery.
+          <p className="mt-4 text-xl font-semibold text-slate-700 md:text-2xl">
+            Backend &amp; Full-Stack Developer
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-6 sm:flex-row lg:justify-start">
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => openWhatsApp('Development')}
-              className="group relative rounded-full bg-white px-10 py-4 text-sm font-black uppercase tracking-widest text-slate-950 transition-all hover:bg-cyan-400"
-            >
-              Book Consultancy
-            </motion.button>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-slate-600 lg:mx-0">
+            I build backend-heavy products, full-stack applications, and scalable systems with Java, Spring Boot,
+            and React, for teams and clients who want clean engineering and confident delivery.
+          </p>
 
-            <div className="relative max-w-xs text-center sm:text-left">
-              <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                <strong className="text-slate-900 dark:text-white">Expertise in</strong> Backend architecture,
-                freelance builds, and product consulting.
-              </p>
-              {/* Subtle accent line */}
-              <div className="absolute -left-4 top-0 hidden h-full w-1px  from-transparent  via-cyan-500 to-transparent lg:block" />
-            </div>
+          <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
+            <button type="button" onClick={() => openWhatsApp('Consultation')} className="btn-primary">
+              Book a Consultation <ArrowRight size={16} />
+            </button>
+            <a href="#projects" className="btn-secondary">
+              View Projects
+            </a>
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-2 lg:justify-start">
+            <a
+              href={SOCIAL_LINKS.github.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-nav-icon"
+              aria-label="GitHub"
+            >
+              <GitHubIcon />
+            </a>
+            <a
+              href={SOCIAL_LINKS.linkedin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-nav-icon"
+              aria-label="LinkedIn"
+            >
+              <LinkedInIcon />
+            </a>
+            <a href={SOCIAL_LINKS.email.url} className="site-nav-icon" aria-label="Email">
+              <Mail size={18} />
+            </a>
           </div>
         </motion.div>
         <motion.div
@@ -102,7 +122,9 @@ export const Hero = () => {
             />
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-700">What I Can Help With</p>
-              <h3 className="mt-2 text-3xl font-black text-slate-950">Services that teams actually need</h3>
+              <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 md:text-3xl">
+                Services that teams actually need
+              </h2>
               <p className="mt-2 text-sm leading-7 text-slate-600">
                 Practical engineering support, product-focused implementation, and delivery you can ship with.
               </p>
@@ -118,7 +140,7 @@ export const Hero = () => {
                 transition={{ duration: 0.45, delay: 0.15 + index * 0.08 }}
                 className="hero-service-card"
               >
-                <p className="text-lg font-bold text-slate-950">{service.title}</p>
+                <h3 className="text-lg font-bold text-slate-950">{service.title}</h3>
                 <p className="mt-2 text-sm leading-7 text-slate-600">{service.detail}</p>
               </motion.article>
             ))}

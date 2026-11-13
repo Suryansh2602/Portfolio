@@ -4,11 +4,11 @@ import { useTicTacToe } from '../hooks/useTicTacToe';
 import { getRandomIndex } from '../utils/random';
 import planeImage from '../assets/plane.png';
 import BorderGlow from './BorderGlow';
+import { SectionHeading } from './SectionHeading';
 
 type Choice = 'Rock' | 'Paper' | 'Scissors';
 
 const choices: Choice[] = ['Rock', 'Paper', 'Scissors'];
-const confettiPieces = Array.from({ length: 24 }, (_, index) => index);
 const planeSprinkles = Array.from({ length: 18 }, (_, index) => index);
 const crackerBursts = [
   { top: '18%', left: '14%', delay: 0 },
@@ -68,7 +68,7 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
   };
 
   return (
-    <section className="relative px-4 py-20  overflow-hidden min-h-screen">
+    <section id="games" className="relative px-4 py-24 overflow-hidden">
       <AnimatePresence>
         {showCelebration && (
           <motion.div
@@ -119,9 +119,12 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
       </AnimatePresence>
 
       <div className="mx-auto max-w-6xl">
-        <div className="mb-14 text-center">
-          <h2 className="text-4xl font-black tracking-tight md:text-5xl">Take a Break?</h2>
-          <p className="mt-4 text-slate-400 text-lg">Quick games for a quick refresh.</p>
+        <div className="mb-14">
+          <SectionHeading
+            eyebrow="Off the Clock"
+            title="Take a break?"
+            description="Two quick games for a quick refresh."
+          />
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2 bg-none backdrop-blur-sm">
@@ -229,7 +232,7 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
                   <button
                     onClick={revealRound}
                     disabled={!userChoice || isRevealed}
-                    className="flex-1 rounded-xl bg-white px-6 py-4 text-sm font-black hover:bg-cyan-400 transition-all disabled:opacity-100"
+                    className="flex-1 rounded-xl bg-white px-6 py-4 text-sm font-black hover:bg-cyan-400 transition-all disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
                   >
                     Reveal
                   </button>

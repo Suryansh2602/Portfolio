@@ -6,6 +6,12 @@ export interface Project {
   tags: string[];
 }
 
+export const SOCIAL_LINKS = {
+  github: { label: "GitHub", handle: "@Suryansh2602", url: "https://github.com/Suryansh2602" },
+  linkedin: { label: "LinkedIn", handle: "suryansh-pushpkar", url: "https://linkedin.com/in/suryansh-pushpkar" },
+  email: { label: "Email", handle: "suryanshpushpkar183@gmail.com", url: "mailto:suryanshpushpkar183@gmail.com" },
+};
+
 export const SKILLS: string[] = [
   "Java", "Spring Boot", "Microservices", "React", "Git", "Spring Security", "Thymeleaf", "MySQL", "Java Swing","Spring Data JPA",
   "TypeScript", "PostgreSQL", "Tailwind CSS", "JWT/OAuth" , "RESTful APIs", "Testing Frameworks (JUnit, Mockito)", "Swagger", "POSTMAN",
