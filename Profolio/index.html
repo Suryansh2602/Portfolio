@@ -35,6 +35,17 @@
         }
       } catch (e) {}
     </script>
+
+    <!-- Always open at the hero: no restored scroll position, no jump to a leftover #section -->
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      if (location.hash) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+      window.scrollTo(0, 0);
+    </script>
   </head>
 
   <body>
