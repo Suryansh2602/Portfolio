@@ -1,33 +1,214 @@
 /* src/index.css */
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-/* The theme toggle sets .theme-dark on <main>, so dark: utilities key off that class */
-@custom-variant dark (&:where(.theme-dark, .theme-dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Colour tokens resolve at runtime so one class works in both themes: bg-bg, text-ink, border-line, ... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+}
+
+@theme {
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root,
+[data-theme="dark"] {
+  --bg: #0b0b0a;
+  --bg-elevated: #151514;
+  --ink: #f1efe8;
+  --muted: #8d8c85;
+  --line: rgb(241 239 232 / 0.12);
+  --accent: #cbf36a;
+  --accent-ink: #cbf36a;
+  --on-accent: #0b0b0a;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f1efe8;
+  --bg-elevated: #e7e4da;
+  --ink: #0d0d0c;
+  --muted: #64635d;
+  --line: rgb(13 13 12 / 0.14);
+  --accent: #cbf36a;
+  --accent-ink: #476600;
+  --on-accent: #0b0b0a;
+  color-scheme: light;
+}
 
 @layer base {
-  :root {
-    font-family: "Sora", "Segoe UI", sans-serif;
-    color: #0f172a;
-    background: #fffdf8;
-  }
-
   html {
-    scroll-behavior: smooth;
-  }
-
-  /* Keep anchored sections clear of the fixed navbar */
-  section[id],
-  footer[id] {
-    scroll-margin-top: 4.5rem;
+    background: var(--bg);
+    color: var(--ink);
   }
 
   body {
-    @apply antialiased;
-    background: #fffdf8;
-    color: #0f172a;
+    @apply font-sans antialiased;
+    background: var(--bg);
+    color: var(--ink);
+    transition:
+      background-color 400ms ease,
+      color 400ms ease;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
   }
 
   #root {
     min-height: 100vh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  .display-xl {
+    font-size: clamp(3rem, 9vw, 9.5rem);
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+  }
+
+  .display-lg {
+    font-size: clamp(2.5rem, 6.5vw, 6.5rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  .display-md {
+    font-size: clamp(1.75rem, 3.6vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .btn-accent,
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 250ms ease,
+      color 250ms ease,
+      border-color 250ms ease;
+  }
+
+  .btn-accent {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .btn-accent:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--ink);
+  }
+
+  /* Underline that draws in from the left on hover */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .link-draw:hover {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
+  }
+
+  .grain {
+    position: fixed;
+    inset: -50%;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* The custom cursor replaces the native one only on precise pointers */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
   }
 }

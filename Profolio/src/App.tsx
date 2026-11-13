@@ -1,125 +1,93 @@
-import { useEffect, useState } from 'react';
+import { AnimatePresence, MotionConfig } from 'framer-motion';
+import { useCallback, useEffect, useState } from 'react';
 
-import './App.css';
-
-import Antigravity from './components/Antigravity';
 import { ContactDock } from './components/ContactDock';
+import { Cursor } from './components/Cursor';
 import { Footer } from './components/Footer';
 import { Game } from './components/Game';
 import { Navbar } from './components/Navbar';
-import { Reveal } from './components/Reveal';
+import { Preloader } from './components/Preloader';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
+import { prefersReducedMotion } from './utils/motion';
 
 import { About } from './sections/About';
+import { Contact } from './sections/Contact';
 import { Experience } from './sections/Experience';
 import { Hero } from './sections/Hero';
-import { Projects } from './sections/Projects';
+import { Process } from './sections/Process';
+import { Services } from './sections/Services';
 import { Skills } from './sections/Skills';
+import { Work } from './sections/Work';
+
+type Theme = 'light' | 'dark';
+
+const THEME_KEY = 'portfolio-theme';
+const INTRO_KEY = 'portfolio-intro-seen';
+const THEME_COLORS: Record<Theme, string> = { dark: '#0b0b0a', light: '#f1efe8' };
 
 function App() {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    if (typeof window === 'undefined') {
-      return 'dark';
-    }
+  // index.html applies the saved theme before React loads; start from what it chose
+  const [theme, setTheme] = useState<Theme>(() =>
+    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
+  );
 
-    const savedTheme = window.localStorage.getItem('portfolio-theme');
+  // The intro plays once per browser session, and never for reduced-motion users
+  const [loaded, setLoaded] = useState(
+    () => sessionStorage.getItem(INTRO_KEY) === '1' || prefersReducedMotion(),
+  );
 
-    return savedTheme === 'light' || savedTheme === 'dark'
-      ? savedTheme
-      : 'dark';
-  });
+  const finishIntro = useCallback(() => {
+    sessionStorage.setItem(INTRO_KEY, '1');
+    setLoaded(true);
+  }, []);
 
-  const [partyMode, setPartyMode] = useState(false);
-
-  useEffect(() => {
-    if (!partyMode) return;
-
-    const timer = window.setTimeout(() => {
-      setPartyMode(false);
-    }, 7200);
-
-    return () => window.clearTimeout(timer);
-  }, [partyMode]);
+  useSmoothScroll(loaded);
 
   useEffect(() => {
-    window.localStorage.setItem('portfolio-theme', theme);
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLORS[theme]);
+    window.localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
 
+  // Hold the page still while the preloader is up
+  useEffect(() => {
+    if (loaded) return;
+
+    const root = document.documentElement;
+    root.style.overflow = 'hidden';
+
+    return () => {
+      root.style.overflow = '';
+    };
+  }, [loaded]);
+
   return (
-    <main
-      className={`page-shell min-h-screen ${
-        theme === 'dark' ? 'theme-dark' : 'theme-light'
-      } ${partyMode ? 'party-mode' : ''}`}
-    >
-      {/* =========================
-          FULLSCREEN BACKGROUND
-      ========================== */}
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence>{!loaded && <Preloader onDone={finishIntro} />}</AnimatePresence>
 
-      <div className="antigravity-background">
-        <Antigravity
-          count={300}
-          magnetRadius={6}
-          ringRadius={7}
-          waveSpeed={0.4}
-          waveAmplitude={1}
-          particleSize={1.5}
-          lerpSpeed={0.05}
-          color="#845b93"
-          autoAnimate
-          particleVariance={1}
-          rotationSpeed={0}
-          depthFactor={1}
-          pulseSpeed={3}
-          particleShape="sphere"
-          fieldStrength={10}
-        />
-      </div>
-
-      {/* =========================
-          OPTIONAL OVERLAYS
-      ========================== */}
-
-      <div className="page-noise" />
-      <div className="page-glow page-glow-one" />
-      <div className="page-glow page-glow-two" />
-
-      <div className="party-glow party-glow-one" />
-      <div className="party-glow party-glow-two" />
-
-      {/* =========================
-          ALL WEBSITE CONTENT
-      ========================== */}
+      <Cursor />
+      <div className="grain" aria-hidden="true" />
 
       <Navbar
         theme={theme}
-        onToggleTheme={() =>
-          setTheme((current) => (current === 'light' ? 'dark' : 'light'))
-        }
+        onToggleTheme={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
       />
 
-      <div className="page-content">
-        <Hero />
-
-        <Reveal>
-          <About />
-        </Reveal>
-
-        <Reveal>
-          <Skills />
-        </Reveal>
-
-        <Reveal>
-          <Projects />
-        </Reveal>
-
+      <main>
+        <Hero ready={loaded} />
+        <About />
+        <Skills />
+        <Services />
+        <Work />
+        <Contact />
         <Experience />
+        <Process />
+        <Game />
+      </main>
 
-        <Game onCelebrate={() => setPartyMode(true)} />
-
-        <Footer />
-
-        <ContactDock />
-      </div>
-    </main>
+      <Footer />
+      <ContactDock />
+    </MotionConfig>
   );
 }
 

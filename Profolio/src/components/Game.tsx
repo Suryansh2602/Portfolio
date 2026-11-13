@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import planeImage from '../assets/plane.png';
 import { useTicTacToe } from '../hooks/useTicTacToe';
 import { getRandomIndex } from '../utils/random';
-import planeImage from '../assets/plane.png';
-import BorderGlow from './BorderGlow';
-import { SectionHeading } from './SectionHeading';
+import { MaskLine } from './MaskLine';
+import { SectionLabel } from './SectionLabel';
 
 type Choice = 'Rock' | 'Paper' | 'Scissors';
 
@@ -19,6 +19,8 @@ const crackerBursts = [
   { top: '64%', left: '82%', delay: 1.92 },
 ];
 
+const CELEBRATION_MS = 7200;
+
 const getRoundWinner = (user: Choice, computer: Choice) => {
   if (user === computer) return 'Draw';
   if (
@@ -31,23 +33,31 @@ const getRoundWinner = (user: Choice, computer: Choice) => {
   return 'Computer';
 };
 
-export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
+export const Game = () => {
   const { board, handleClick, winner, isDraw, resetGame, isXNext } = useTicTacToe();
   const [userChoice, setUserChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const celebrationTimer = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(celebrationTimer.current), []);
 
   const roundWinner = useMemo(() => {
     if (!userChoice || !computerChoice || !isRevealed) return null;
     return getRoundWinner(userChoice, computerChoice);
   }, [computerChoice, isRevealed, userChoice]);
 
+  const stopCelebration = () => {
+    window.clearTimeout(celebrationTimer.current);
+    setShowCelebration(false);
+  };
+
   const handleChoiceSelect = (choice: Choice) => {
     setUserChoice(choice);
     setComputerChoice(choices[getRandomIndex(choices.length)]);
     setIsRevealed(false);
-    setShowCelebration(false);
+    stopCelebration();
   };
 
   const revealRound = () => {
@@ -55,8 +65,7 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
     setIsRevealed(true);
     if (getRoundWinner(userChoice, computerChoice) === 'User') {
       setShowCelebration(true);
-      onCelebrate?.();
-      window.setTimeout(() => setShowCelebration(false), 7200);
+      celebrationTimer.current = window.setTimeout(() => setShowCelebration(false), CELEBRATION_MS);
     }
   };
 
@@ -64,11 +73,13 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
     setUserChoice(null);
     setComputerChoice(null);
     setIsRevealed(false);
-    setShowCelebration(false);
+    stopCelebration();
   };
 
+  const ticTacToeStatus = winner ? `Winner — ${winner}` : isDraw ? 'Draw game' : `Turn — ${isXNext ? 'X' : 'O'}`;
+
   return (
-    <section id="games" className="relative px-4 py-24 overflow-hidden">
+    <section id="play" className="py-28 md:py-40">
       <AnimatePresence>
         {showCelebration && (
           <motion.div
@@ -77,39 +88,47 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
             exit={{ opacity: 0 }}
             className="pointer-events-none fixed inset-0 z-[80] overflow-hidden"
           >
-            <div className="absolute inset-0 bg-cyan-200/5" />
             <motion.div
               initial={{ x: '-55vw', y: 42, opacity: 0 }}
               animate={{ x: '132vw', y: -12, opacity: [0, 1, 1, 1, 0] }}
               transition={{ duration: 6.8, ease: 'linear' }}
-              className="absolute left-0 top-[16%] z-[82]"
+              className="absolute left-0 top-[16%]"
             >
               <div className="relative flex items-center">
-                <div className="ml-3 rounded-full border border-white/70 px-5 py-2 text-sm font-black uppercase tracking-[0.28em] ">
-                  You Won
+                <div className="ml-3 rounded-full bg-accent px-5 py-2 font-mono text-sm uppercase tracking-[0.2em] text-on-accent">
+                  You won
                 </div>
-                <div className="-ml-2 rounded-full bg-white/90 p-2 ">
-                  <img src={planeImage} alt="Plane" className="h-10 w-10 object-contain" />
+                <div className="-ml-2 rounded-full bg-ink p-2">
+                  <img src={planeImage} alt="" className="h-10 w-10 object-contain" />
                 </div>
-                {planeSprinkles.map((s) => (
+                {planeSprinkles.map((sprinkle) => (
                   <motion.span
-                    key={s}
+                    key={sprinkle}
                     initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: [0, 1, 0], x: [-18 - s * 3, -110 - s * 7], y: [0, s % 2 === 0 ? 28 : -28] }}
-                    className="absolute h-2 w-2 rounded-full bg-cyan-400"
+                    animate={{
+                      opacity: [0, 1, 0],
+                      x: [-18 - sprinkle * 3, -110 - sprinkle * 7],
+                      y: [0, sprinkle % 2 === 0 ? 28 : -28],
+                    }}
+                    className="absolute h-2 w-2 rounded-full bg-accent"
                   />
                 ))}
               </div>
             </motion.div>
-            {crackerBursts.map((burst, i) => (
-              <div key={i} className="absolute" style={{ top: burst.top, left: burst.left }}>
-                {Array.from({ length: 10 }).map((_, si) => (
+            {crackerBursts.map((burst, burstIndex) => (
+              <div key={burstIndex} className="absolute" style={{ top: burst.top, left: burst.left }}>
+                {Array.from({ length: 10 }).map((_, sparkIndex) => (
                   <motion.span
-                    key={si}
+                    key={sparkIndex}
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: [0, 1, 0], x: Math.cos(si) * 70, y: Math.sin(si) * 70, scale: [0, 1, 0.5] }}
+                    animate={{
+                      opacity: [0, 1, 0],
+                      x: Math.cos(sparkIndex) * 70,
+                      y: Math.sin(sparkIndex) * 70,
+                      scale: [0, 1, 0.5],
+                    }}
                     transition={{ duration: 0.9, delay: burst.delay }}
-                    className="absolute h-2 w-2 rounded-full bg-amber-300 shadow-glow"
+                    className="absolute h-2 w-2 rounded-full bg-accent"
                   />
                 ))}
               </div>
@@ -118,149 +137,125 @@ export const Game = ({ onCelebrate }: { onCelebrate?: () => void }) => {
         )}
       </AnimatePresence>
 
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-14">
-          <SectionHeading
-            eyebrow="Off the Clock"
-            title="Take a break?"
-            description="Two quick games for a quick refresh."
-          />
+      <div className="container-x">
+        <SectionLabel index="07">Off the clock</SectionLabel>
+
+        <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-12">
+          <h2 className="display-lg md:col-span-8">
+            <MaskLine>Take a</MaskLine>
+            <MaskLine delay={0.08}>
+              <span className="serif-accent">break?</span>
+            </MaskLine>
+          </h2>
+          <p className="max-w-sm leading-relaxed text-muted md:col-span-4 md:self-end">
+            Two quick games for a quick refresh.
+          </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2 bg-none backdrop-blur-sm">
+        <div className="mt-16 grid gap-px border border-line bg-line md:mt-20 lg:grid-cols-2">
           {/* GAME ONE: TIC TAC TOE */}
-          <BorderGlow
-            glowColor="192 132 252"
-            borderRadius={32}
-            glowRadius={50}
-            colors={['#c084fc', '#38bdf8']}
-          >
-            <article className="p-6 h-full flex flex-col ">
-              <div className="mb-8">
-                <p className="text-xs font-bold uppercase tracking-widest text-purple-400">Game One</p>
-                <h3 className="mt-2 text-3xl font-black ">Tic-Tac-Toe</h3>
-              </div>
+          <article className="flex flex-col bg-bg p-6 md:p-10">
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-2xl font-medium tracking-tight">Tic-Tac-Toe</h3>
+              <span className="label text-accent-ink">Game 01</span>
+            </div>
 
-              <div className="grid grid-cols-3 gap-3 rounded-3xl ">
-                {board.map((value, i) => (
-                  <motion.button
-                    key={i}
-                    whileHover={{ scale: 0.98 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex h-24 items-center justify-center rounded-2xl  text-4xl font-black  bg-purple-300/30  shadow-inner transition-colors"
-                    onClick={() => handleClick(i)}
-                  >
-                    <AnimatePresence mode="wait">
-                      {value && (
-                        <motion.span
-                          initial={{ opacity: 0, scale: 0.5 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className={value === 'X' ? 'text-cyan-400' : 'text-rose-500'}
-                        >
-                          {value}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </motion.button>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-col items-center">
-                {winner ? (
-                  <p className="text-2xl font-black text-emerald-400">Winner: {winner}</p>
-                ) : isDraw ? (
-                  <p className="text-2xl font-black text-slate-400">Draw Game</p>
-                ) : (
-                  <p className="text-slate-300 text-lg">Turn: <span className="font-black">{isXNext ? 'X' : 'O'}</span></p>
-                )}
+            <div className="mx-auto mt-8 grid w-full max-w-sm grid-cols-3 gap-px border border-line bg-line">
+              {board.map((value, index) => (
                 <button
-                  onClick={resetGame}
-                  className="mt-6 rounded-full border border-white/10 px-8 py-3 text-sm font-bold  hover:bg-white/5 transition-all"
+                  key={index}
+                  type="button"
+                  aria-label={`Square ${index + 1}${value ? `, ${value}` : ''}`}
+                  onClick={() => handleClick(index)}
+                  className="grid aspect-square place-items-center bg-bg text-5xl transition-colors hover:bg-bg-elevated md:text-6xl"
                 >
-                  Reset Board
+                  <AnimatePresence mode="wait">
+                    {value && (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className={value === 'X' ? 'font-semibold text-accent-ink' : 'serif-accent'}
+                      >
+                        {value}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </button>
-              </div>
-            </article>
-          </BorderGlow>
+              ))}
+            </div>
+
+            <div className="mt-8 flex items-center justify-between gap-4">
+              <p className={`label ${winner ? 'text-accent-ink' : 'text-ink'}`} aria-live="polite">
+                {ticTacToeStatus}
+              </p>
+              <button type="button" onClick={resetGame} className="btn-outline py-2.5">
+                Reset board
+              </button>
+            </div>
+          </article>
 
           {/* GAME TWO: ROCK PAPER SCISSORS */}
-          <BorderGlow
-            glowColor="56 189 248"
-            backgroundColor="#1A1625"
-            borderRadius={32}
-            glowRadius={50}
-            colors={['#38bdf8', '#f472b6']}
-          >
-            <article className="p-8 h-full flex flex-col">
-              <div className="mb-8">
-                <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Game Two</p>
-                <h3 className="mt-2 text-3xl font-black ">R-P-S</h3>
-              </div>
+          <article className="flex flex-col bg-bg p-6 md:p-10">
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-2xl font-medium tracking-tight">Rock, Paper, Scissors</h3>
+              <span className="label text-accent-ink">Game 02</span>
+            </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                {choices.map((choice) => (
-                  <motion.button
-                    key={choice}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleChoiceSelect(choice)}
-                    className={`rounded-2xl border-2 px-4 py-6 text-center transition-all ${userChoice === choice
-                        ? 'border-cyan-500 bg-cyan-500/20 '
-                        : 'border-white/5 bg-white/5 text-slate-400 hover:border-white/20'
-                      }`}
+            <div className="mt-8 grid grid-cols-3 gap-px border border-line bg-line">
+              {choices.map((choice) => (
+                <button
+                  key={choice}
+                  type="button"
+                  aria-pressed={userChoice === choice}
+                  onClick={() => handleChoiceSelect(choice)}
+                  className={`px-3 py-8 text-lg font-medium transition-colors ${
+                    userChoice === choice ? 'bg-accent text-on-accent' : 'bg-bg hover:bg-bg-elevated'
+                  }`}
+                >
+                  {choice}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-px border border-line bg-line">
+              <div className="bg-bg p-5">
+                <p className="label">You</p>
+                <p className="mt-2 text-2xl font-medium">{userChoice ?? '—'}</p>
+              </div>
+              <div className="bg-bg p-5">
+                <p className="label">CPU</p>
+                <p className="mt-2 text-2xl font-medium">{isRevealed ? computerChoice : '???'}</p>
+              </div>
+            </div>
+
+            <div className="mt-auto pt-8">
+              <div className="flex h-14 items-center" aria-live="polite">
+                {isRevealed && (
+                  <motion.p
+                    initial={{ y: 10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className={`display-md ${roundWinner === 'User' ? 'text-accent-ink' : ''}`}
                   >
-                    <p className="text-lg font-black">{choice}</p>
-                  </motion.button>
-                ))}
+                    {roundWinner === 'Draw' ? "It's a tie." : roundWinner === 'User' ? 'Victory.' : 'CPU wins.'}
+                  </motion.p>
+                )}
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-2xl bg-black/20 p-4 border border-white/5 text-center">
-                  <p className="text-[10px] font-bold uppercase text-slate-500 tracking-tighter">You</p>
-                  <p className="text-xl font-black  mt-1">{userChoice ?? '-'}</p>
-                </div>
-                <div className="rounded-2xl bg-black/20 p-4 border border-white/5 text-center">
-                  <p className="text-[10px] font-bold uppercase text-slate-500 tracking-tighter">CPU</p>
-                  <p className="text-xl font-black  mt-1">
-                    {isRevealed ? computerChoice : '???'}
-                  </p>
-                </div>
+              <div className="mt-4 flex gap-3">
+                <button
+                  type="button"
+                  onClick={revealRound}
+                  disabled={!userChoice || isRevealed}
+                  className="btn-accent flex-1 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-accent disabled:hover:text-on-accent"
+                >
+                  Reveal
+                </button>
+                <button type="button" onClick={resetRps} className="btn-outline flex-1">
+                  Reset
+                </button>
               </div>
-
-              <div className="mt-auto pt-8">
-                <div className="flex gap-4">
-                  <button
-                    onClick={revealRound}
-                    disabled={!userChoice || isRevealed}
-                    className="flex-1 rounded-xl bg-white px-6 py-4 text-sm font-black hover:bg-cyan-400 transition-all disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"
-                  >
-                    Reveal
-                  </button>
-                  <button
-                    onClick={resetRps}
-                    className="flex-1 rounded-xl border border-white/10 px-6 py-4 text-sm font-bold  hover:bg-white/5"
-                  >
-                    Reset
-                  </button>
-                </div>
-
-                <div className="mt-6 h-12 flex items-center justify-center">
-                  {isRevealed && (
-                    <motion.p
-                      initial={{ y: 10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      className={`text-xl font-black ${roundWinner === 'User' ? 'text-emerald-400' :
-                          roundWinner === 'Draw' ? 'text-slate-400' : 'text-rose-500'
-                        }`}
-                    >
-                      {roundWinner === 'Draw' ? "It's a Tie!" :
-                        roundWinner === 'User' ? "Victory!" : "CPU Wins!"}
-                    </motion.p>
-                  )}
-                </div>
-              </div>
-            </article>
-          </BorderGlow>
+            </div>
+          </article>
         </div>
       </div>
     </section>

@@ -1,54 +1,53 @@
 // src/components/ContactDock.tsx
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
+import { useState } from 'react';
 import { openWhatsApp } from '../utils/whatsapp';
 
+// Floating WhatsApp shortcut. Hidden over the hero and footer, which have their own contact CTAs.
 export const ContactDock = () => {
+  const [visible, setVisible] = useState(false);
+  const { scrollYProgress } = useScroll();
+
+  useMotionValueEvent(scrollYProgress, 'change', (progress) => {
+    setVisible(progress > 0.08 && progress < 0.92);
+  });
+
   return (
-    <motion.div 
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-28 h-28"
-    >
-      <div className="relative flex items-center justify-center w-full h-full">
-        
-        {/* ROTATING TEXT OVERLAY */}
+    <AnimatePresence>
+      {visible && (
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-          className="absolute inset-0 pointer-events-none"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+          className="fixed bottom-5 right-5 z-50 h-24 w-24"
         >
-          <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
-            <defs>
-              {/* Invisible path that defines a perfect circle for the text to follow */}
-              <path
-                id="textPathCircle"
-                d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
-              />
-            </defs>
-            <text className="text-[9.5px] font-black uppercase tracking-[0.18em] fill-slate-800 dark:fill-slate-200 transition-colors duration-500">
-              <textPath href="#textPathCircle" startOffset="0%">
-                • LET'S TALK • CHAT WITH ME
-              </textPath>
-            </text>
-          </svg>
-        </motion.div>
-
-        {/* INNER CIRCULAR BUTTON */}
-        <div className="relative z-10">
-          <motion.button 
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.92 }}
-            onClick={() => openWhatsApp("Direct Query")}
-            aria-label="Chat on WhatsApp"
-            className="flex items-center justify-center w-14 h-14 text-white bg-green-600 dark:bg-green-500 rounded-full hover:bg-green-500 dark:hover:bg-green-400 transition-colors shadow-[0_4px_20px_rgba(34,197,94,0.3)] border border-green-500/20"
+          <motion.svg
+            viewBox="0 0 100 100"
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 12, ease: 'linear' }}
           >
-            <MessageCircle size={22} className="fill-current" />
-          </motion.button>
-        </div>
+            <defs>
+              <path id="dock-text-path" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+            </defs>
+            <text className="fill-ink font-mono text-[8.5px] uppercase tracking-[0.2em]">
+              <textPath href="#dock-text-path">• Let's talk • Chat on WhatsApp </textPath>
+            </text>
+          </motion.svg>
 
-      </div>
-    </motion.div>
+          <button
+            type="button"
+            onClick={() => openWhatsApp('Direct Query')}
+            aria-label="Chat on WhatsApp"
+            className="absolute left-1/2 top-1/2 grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-on-accent transition-transform hover:scale-110"
+          >
+            <MessageCircle size={20} />
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

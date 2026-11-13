@@ -1,37 +1,17 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
-import { SectionHeading } from '../components/SectionHeading';
-import { SOCIAL_LINKS } from '../config/data';
 
 import slideOne from '../assets/about-1.jpeg';
 import slideTwo from '../assets/about-2.jpeg';
 import slideThree from '../assets/about-3.jpeg';
 import slideFour from '../assets/about-4.jpeg';
-
-const profiles = [
-  {
-    name: SOCIAL_LINKS.github.label,
-    handle: SOCIAL_LINKS.github.handle,
-    url: SOCIAL_LINKS.github.url,
-    Icon: GitHubIcon,
-    blurb:
-      'Public code, backend systems, architecture experiments, and production builds.',
-    tint: 'from-slate-950 via-slate-800 to-slate-700',
-    pills: ['Repositories', 'Backend', 'Java', 'Spring Boot'],
-  },
-  {
-    name: SOCIAL_LINKS.linkedin.label,
-    handle: SOCIAL_LINKS.linkedin.handle,
-    url: SOCIAL_LINKS.linkedin.url,
-    Icon: LinkedInIcon,
-    blurb:
-      'Professional experience, freelance delivery, and real-world collaboration.',
-    tint: 'from-cyan-700 via-sky-600 to-blue-500',
-    pills: ['Experience', 'Freelance', 'Delivery', 'Networking'],
-  },
-];
+import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
+import { FadeIn } from '../components/FadeIn';
+import { ScrollWords } from '../components/ScrollWords';
+import { SectionLabel } from '../components/SectionLabel';
+import { SOCIAL_LINKS } from '../config/data';
+import { EASE } from '../utils/motion';
 
 const slides = [
   { image: slideOne, caption: 'Professional journey highlights and real work moments' },
@@ -40,164 +20,91 @@ const slides = [
   { image: slideFour, caption: 'From training to real-world delivery systems' },
 ];
 
+const facts = [
+  { label: 'Currently', value: 'Software Developer, Webkorps' },
+  { label: 'Focus', value: 'Backend architecture & microservices' },
+  { label: 'Core stack', value: 'Java, Spring Boot, React' },
+  { label: 'Previously', value: 'InfoBeans, Calance International' },
+];
+
+const INTRO =
+  "I'm Suryansh, a software developer at Webkorps. I build the parts of a product people don't see: APIs, services, auth flows and data models, so the parts they do see feel fast and dependable. Alongside full-time work, I take on freelance builds for clients who value clean engineering and clear communication.";
+
 export const About = () => {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const t = window.setInterval(() => {
-      setActive((p) => (p + 1) % slides.length);
-    }, 3500);
+    const timer = window.setInterval(() => {
+      setActive((current) => (current + 1) % slides.length);
+    }, 4000);
 
-    return () => window.clearInterval(t);
+    return () => window.clearInterval(timer);
   }, []);
 
   return (
-    <section id="about" className="relative px-4 py-24 overflow-hidden">
+    <section id="about" className="py-28 md:py-40">
+      <div className="container-x">
+        <SectionLabel index="01">About</SectionLabel>
 
-      {/* background glow */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-300/15 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-purple-400/10 blur-[140px]" />
-      </div>
-
-      <div className="mx-auto max-w-6xl relative">
-
-        {/* heading */}
-        <div className="mb-14">
-          <SectionHeading
-            eyebrow="About Me"
-            title={<>Developer profile with <span className="text-cyan-500">real impact</span></>}
-            description="Full-stack engineering experience with freelance delivery and production-grade backend systems."
-          />
-        </div>
-
-        {/* SLIDESHOW */}
-        <div className="grid lg:grid-cols-2 gap-10 items-center mb-16">
-
-          {/* IMAGE (NO ASPECT RATIO CHANGE) */}
-          <div className="relative rounded-3xl overflow-hidden bg-white/10 backdrop-blur-xl shadow-inner flex items-center justify-center p-3">
-
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={active}
-                src={slides[active].image}
-                alt={slides[active].caption}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-
-                // IMPORTANT: preserves original aspect ratio
-                className="max-w-full max-h-[420px] w-auto h-auto object-contain rounded-2xl"
-              />
-            </AnimatePresence>
-
-            {/* soft overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5 pointer-events-none" />
-          </div>
-
-          {/* TEXT SIDE */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-600">
-              Showcase
-            </p>
-
-            <h3 className="mt-3 text-2xl font-bold tracking-tight text-slate-900">
-              Visual journey of growth
-            </h3>
-
-            <p className="mt-4 text-sm leading-7 text-slate-600 min-h-[60px]">
-              {slides[active].caption}
-            </p>
-
-            <div className="mt-5 flex gap-2">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  aria-label={`Show photo ${i + 1}`}
-                  aria-current={i === active}
-                  onClick={() => setActive(i)}
-                  className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === active
-                    ? 'bg-cyan-500 scale-125'
-                    : 'bg-slate-300/70'
-                    }`}
+        <div className="mt-12 grid gap-12 md:mt-16 md:grid-cols-12 md:gap-8">
+          <FadeIn className="md:col-span-5">
+            {/* Photos are mixed landscape/square/portrait, so each keeps its own ratio inside a square frame */}
+            <div className="relative grid aspect-square place-items-center overflow-hidden bg-bg-elevated p-3">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={active}
+                  src={slides[active].image}
+                  alt={slides[active].caption}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease: EASE }}
+                  className="max-h-full max-w-full object-contain"
                 />
-              ))}
+              </AnimatePresence>
             </div>
+
+            <div className="mt-4 flex items-start justify-between gap-4">
+              <p className="label min-h-8 max-w-[16rem] normal-case tracking-normal">{slides[active].caption}</p>
+              <div className="flex gap-1.5 pt-1">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    aria-label={`Show photo ${index + 1}`}
+                    aria-current={index === active}
+                    onClick={() => setActive(index)}
+                    className={`h-1 rounded-full transition-all duration-500 ${
+                      index === active ? 'w-8 bg-accent' : 'w-4 bg-line'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+
+          <div className="md:col-span-7 md:pl-8">
+            <ScrollWords className="display-md" text={INTRO} />
+
+            <dl className="mt-16 grid gap-x-8 gap-y-8 sm:grid-cols-2">
+              {facts.map((fact, index) => (
+                <FadeIn key={fact.label} delay={index * 0.06} className="border-t border-line pt-4">
+                  <dt className="label">{fact.label}</dt>
+                  <dd className="mt-2 text-lg">{fact.value}</dd>
+                </FadeIn>
+              ))}
+            </dl>
+
+            <FadeIn className="mt-12 flex flex-wrap gap-3">
+              <a href={SOCIAL_LINKS.github.url} target="_blank" rel="noopener noreferrer" className="btn-outline">
+                <GitHubIcon size={16} /> GitHub <ArrowUpRight size={14} />
+              </a>
+              <a href={SOCIAL_LINKS.linkedin.url} target="_blank" rel="noopener noreferrer" className="btn-outline">
+                <LinkedInIcon size={16} /> LinkedIn <ArrowUpRight size={14} />
+              </a>
+            </FadeIn>
           </div>
         </div>
-
-        {/* PROFILE CARDS */}
-        <div className="grid lg:grid-cols-2 gap-6">
-
-          {profiles.map((p, i) => (
-            <motion.article
-              key={p.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative rounded-3xl overflow-hidden bg-white/10 backdrop-blur-xl shadow-inner group"
-            >
-
-              <div className={`flex h-28 items-end bg-linear-to-r p-6 text-white ${p.tint}`}>
-                <p.Icon size={28} />
-              </div>
-
-              <div className="p-6">
-
-                <div className="flex justify-between items-start gap-4">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">
-                      {p.name}
-                    </p>
-
-                    <h3 className="text-xl font-bold text-slate-900 mt-1">
-                      {p.handle}
-                    </h3>
-
-                    <p className="mt-3 text-sm text-slate-600 leading-6">
-                      {p.blurb}
-                    </p>
-                  </div>
-
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Open ${p.name}`}
-                    className="p-3 rounded-full bg-white/20 hover:bg-white/30 transition"
-                  >
-                    <ExternalLink size={18} />
-                  </a>
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {p.pills.map((pill) => (
-                    <span
-                      key={pill}
-                      className="text-xs px-3 py-1 rounded-full bg-white/30 backdrop-blur-md text-slate-700 shadow-inner"
-                    >
-                      {pill}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-600 hover:text-cyan-800"
-                >
-                  Visit {p.name} →
-                </a>
-
-              </div>
-            </motion.article>
-          ))}
-        </div>
-
       </div>
     </section>
   );

@@ -1,142 +1,36 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { FadeIn } from '../components/FadeIn';
+import { MaskLine } from '../components/MaskLine';
+import { SectionLabel } from '../components/SectionLabel';
 import { EXPERIENCE } from '../config/data';
-import { Reveal } from '../components/Reveal';
-import { SectionHeading } from '../components/SectionHeading';
 
 export function Experience() {
-    const containerRef = useRef<HTMLDivElement>(null);
+  return (
+    <section id="experience" className="py-28 md:py-40">
+      <div className="container-x">
+        <SectionLabel index="05">Experience</SectionLabel>
 
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start 85%", "end 20%"]
-    });
+        <h2 className="display-lg mt-12 md:mt-16">
+          <MaskLine>Where I've</MaskLine>
+          <MaskLine delay={0.08}>
+            <span className="serif-accent">worked</span>
+          </MaskLine>
+        </h2>
 
-    const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-    return (
-        <section
-            id="experience"
-            ref={containerRef}
-            className="relative px-4 py-24 overflow-hidden"
-        >
-
-
-            <div className="mx-auto max-w-5xl relative">
-
-                {/* HEADER */}
-                <div className="mb-20">
-                    <Reveal>
-                        <SectionHeading
-                            eyebrow="Career Timeline"
-                            title="Experience that builds products"
-                            description="Where I've worked, trained, and delivered: from enterprise teams to independent clients."
-                        />
-                    </Reveal>
+        <ol className="mt-16 border-t border-line md:mt-20">
+          {EXPERIENCE.map((item, index) => (
+            <li key={`${item.company}-${item.role}`} className="border-b border-line">
+              <FadeIn delay={index * 0.04} className="grid gap-3 py-8 md:grid-cols-12 md:gap-6 md:py-10">
+                <p className="label pt-1.5 md:col-span-3">{item.duration}</p>
+                <div className="md:col-span-4">
+                  <h3 className="text-2xl font-medium tracking-tight">{item.role}</h3>
+                  <p className="mt-1 text-muted">{item.company}</p>
                 </div>
-
-                {/* TIMELINE WRAPPER */}
-                <div className="relative">
-
-                    {/* static line */}
-                    <div className="absolute left-4 md:left-1/2 top-0 h-full w-[2px] -translate-x-1/2 bg-white/5" />
-
-                    {/* animated line */}
-                    <motion.div
-                        style={{ height: lineHeight }}
-                        className="absolute left-4 md:left-1/2 top-0 w-[2px] -translate-x-1/2 origin-top
-                       bg-gradient-to-b from-cyan-400 via-blue-500 to-fuchsia-500
-                       shadow-[0_0_25px_rgba(34,211,238,0.35)]"
-                    />
-
-                    <div className="space-y-24">
-
-                        {EXPERIENCE.map((item, index) => (
-                            <motion.div
-                                key={`${item.company}-${item.role}`}
-
-                                initial={{ opacity: 0, y: 50, scale: 0.97 }}
-                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                                viewport={{ once: true, amount: 0.35 }}
-
-                                transition={{
-                                    duration: 0.6,
-                                    ease: [0.22, 1, 0.36, 1],
-                                    delay: index * 0.06
-                                }}
-
-                                className="relative"
-                            >
-
-                                {/* DOT */}
-                                <div className="absolute left-4 md:left-1/2 top-8 -translate-x-1/2 z-20">
-                                    <div className="h-3.5 w-3.5 rounded-full bg-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.9)]" />
-                                </div>
-
-                                {/* CARD */}
-                                <article
-                                    className={`
-                    relative group
-                    w-[calc(100%-2rem)] md:w-[44%]
-                    ml-8 md:ml-0
-                    ${index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}
-
-                    rounded-3xl p-6 md:p-8
-
-                    bg-white/5 backdrop-blur-2xl
-
-                    /* ONLY inner depth */
-                    shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]
-
-                    overflow-hidden
-                    transition-all duration-300
-                    hover:-translate-y-2
-                  `}
-                                >
-
-                                    {/* internal glow */}
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500">
-                                        <div className="absolute -top-12 -left-12 h-52 w-52 bg-cyan-400/10 blur-3xl rounded-full" />
-                                        <div className="absolute bottom-0 right-0 h-52 w-52 bg-pink-400/10 blur-3xl rounded-full" />
-                                    </div>
-
-                                    {/* content */}
-                                    <div className="relative flex flex-col gap-4">
-
-                                        {/* top row */}
-                                        <div className="flex items-start justify-between gap-4">
-
-                                            <div>
-                                                <h3 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-cyan-500 transition-colors">
-                                                    {item.role}
-                                                </h3>
-
-                                                <p className="text-sm font-semibold text-slate-500 mt-1">
-                                                    {item.company}
-                                                </p>
-                                            </div>
-
-                                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-cyan-600 bg-white/10 px-3 py-1 rounded-full">
-                                                {item.duration}
-                                            </span>
-
-                                        </div>
-
-                                        {/* description */}
-                                        <p className="text-sm leading-7 text-slate-600">
-                                            {item.details}
-                                        </p>
-
-                                    </div>
-
-                                </article>
-
-                            </motion.div>
-                        ))}
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+                <p className="leading-relaxed text-muted md:col-span-5">{item.details}</p>
+              </FadeIn>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
 }

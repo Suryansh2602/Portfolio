@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/logo.png" />
@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <title>Suryansh Pushpkar | Backend &amp; Full-Stack Developer</title>
@@ -24,7 +24,17 @@
       property="og:description"
       content="Backend-heavy products, full-stack applications, and scalable systems built with Java, Spring Boot, and React."
     />
-    <meta name="theme-color" content="#0891b2" />
+    <meta name="theme-color" content="#0b0b0a" />
+
+    <!-- Apply the saved theme before first paint so there is no light/dark flash -->
+    <script>
+      try {
+        var savedTheme = localStorage.getItem('portfolio-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch (e) {}
+    </script>
   </head>
 
   <body>
