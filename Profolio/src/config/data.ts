@@ -15,20 +15,20 @@ export interface Service {
 
 export const SERVICES: Service[] = [
   {
-    title: "Backend Architecture",
-    detail: "Spring Boot APIs, modular services, auth flows, database design, and scalable foundations.",
+    title: "Websites & Web Apps",
+    detail: "From business websites to customer portals and dashboards, built to be fast, secure and easy to use.",
   },
   {
-    title: "Full-Stack Products",
-    detail: "React frontends paired with clean backend systems so the product feels fast and reliable.",
+    title: "Business Software",
+    detail: "Custom tools that replace spreadsheets and manual work, built around how your team actually operates.",
   },
   {
-    title: "Freelance Delivery",
-    detail: "Solutions for clients from planning and development through to final handoff.",
+    title: "Integrations & Automation",
+    detail: "Connecting payments, email, CRMs and your other systems so data flows without copy-pasting.",
   },
   {
-    title: "Consulting & Debugging",
-    detail: "Architecture reviews, cleanup plans, performance fixes, and practical technical guidance.",
+    title: "Fixes & Consulting",
+    detail: "Slow, buggy or hard-to-change software? I find what's wrong, fix it, and explain it in plain words.",
   },
 ];
 
@@ -43,7 +43,7 @@ export const PROCESS: Service[] = [
   },
   {
     title: "Build",
-    detail: "Clean, tested code with JUnit and Mockito, with APIs documented in Swagger as they grow.",
+    detail: "Clean, tested code, with regular demos so you see progress every week, not just at the end.",
   },
   {
     title: "Ship",
@@ -58,35 +58,37 @@ export const SOCIAL_LINKS = {
 };
 
 export const SKILLS: string[] = [
-  "Java", "Spring Boot", "Microservices", "React", "Git", "Spring Security", "Thymeleaf", "MySQL", "Java Swing","Spring Data JPA",
-  "TypeScript", "PostgreSQL", "Tailwind CSS", "JWT/OAuth" , "RESTful APIs", "Testing Frameworks (JUnit, Mockito)", "Swagger", "POSTMAN",
+  // Interleaved so no single language dominates the strip
+  "React", "Java", "TypeScript", "Spring Boot", "RESTful APIs", "PostgreSQL", "Microservices", "Tailwind CSS",
+  "MySQL", "JWT/OAuth", "Spring Security", "Git", "Java Swing", "Swagger", "Spring Data JPA", "Thymeleaf",
+  "Testing (JUnit, Mockito)", "Postman",
 ];
 
 export const PROJECTS: Project[] = [
   {
     title: "UrbanEats",
-    type: "Microservices",
-    description: "A microservices-based food delivery application architecture designed around service boundaries, API communication, and scalable backend thinking.",
+    type: "Web platform",
+    description: "A food delivery platform built as separate parts for orders, restaurants and customers, so each can grow and be updated without taking the others down.",
     tags: ["Java", "Spring Boot", "Microservices", "Postman"],
     github: "https://github.com/Suryansh2602/JAVA-PROJECTS/tree/main/1.%20URBANEATS",
   },
   {
     title: "FriendBook",
-    type: "Full-stack",
-    description: "A social media platform featuring authentication, Spring Security, and full-stack interaction flows.",
+    type: "Web app",
+    description: "A social media web app with secure sign-up and log-in, built end to end, from the screens people use to the database behind them.",
     tags: ["Spring Boot", "Spring Security", "React"],
     github: "https://github.com/Suryansh2602/FriendBook-Web-Application",
   },
   {
     title: "Library Management System",
-    type: "Backend",
-    description: "A servlet-based library application for managing books, records, user activity, and core circulation flows in a structured backend-driven setup.",
+    type: "Business software",
+    description: "Software that helps a library manage its books, members and borrowing in one organised place, instead of paper registers.",
     tags: ["Java", "Servlet", "JSP", "MySQL"],
   },
   {
     title: "Banking Transaction Management System",
     type: "Desktop app",
-    description: "A Java Swing desktop application where each transaction is unique and secured, with records maintained across deposits, withdrawals, transfers, and other banking operations.",
+    description: "A desktop banking app that records deposits, withdrawals and transfers, with every transaction uniquely tracked and secured.",
     tags: ["Java", "Swing", "Desktop Application", "Transaction Security"],
     github: "https://github.com/Suryansh2602/PROJECTS-/tree/main/Banking%20Management%20System",
   },

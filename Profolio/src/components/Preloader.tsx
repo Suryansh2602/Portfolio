@@ -48,7 +48,7 @@ export const Preloader = ({ onDone }: { onDone: () => void }) => {
       </div>
 
       <div className="container-x flex items-end justify-between pb-6">
-        <span className="label">Backend &amp; Full-Stack Developer</span>
+        <span className="label">Full-Stack Software Engineer</span>
         <span className="display-xl tabular-nums">{String(count).padStart(3, '0')}</span>
       </div>
 

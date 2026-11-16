@@ -35,9 +35,9 @@ export const Hero = ({ ready }: { ready: boolean }) => {
       <motion.div style={{ y, opacity }} className="container-x">
         <motion.div {...fadeIn(0.5)} className="mb-8 grid grid-cols-2 gap-4 md:mb-10 md:grid-cols-4">
           <p className="label">
-            Backend &amp;
+            Full-Stack
             <br />
-            Full-Stack Developer
+            Software Engineer
           </p>
           <p className="label">
             Delivering for
@@ -45,9 +45,9 @@ export const Hero = ({ ready }: { ready: boolean }) => {
             US clients
           </p>
           <p className="label hidden md:block">
-            Java · Spring Boot
+            Websites · Web apps
             <br />
-            Microservices · React
+            Business software
           </p>
           <p className="label hidden text-right md:block">
             Portfolio
@@ -57,9 +57,9 @@ export const Hero = ({ ready }: { ready: boolean }) => {
 
         <h1 className="display-xl">
           {/* Name for search engines and screen readers; the visible headline stays as designed */}
-          <span className="sr-only">Suryansh Pushpkar, Backend &amp; Full-Stack Developer: </span>
+          <span className="sr-only">Suryansh Pushpkar, Full-Stack Software Engineer: </span>
           <MaskLine play={ready} delay={0.1}>
-            Backend engineer
+            Software engineer
           </MaskLine>
           <MaskLine play={ready} delay={0.2}>
             building <ApiTicker play={ready} />
@@ -103,8 +103,9 @@ export const Hero = ({ ready }: { ready: boolean }) => {
           </div>
 
           <p className="max-w-md leading-relaxed text-muted md:col-span-5">
-            I build backend-heavy products, full-stack applications and scalable systems with Java, Spring Boot and
-            React, for teams who want clean engineering and confident delivery.
+            I turn ideas into working software, from the screens your customers use to everything running behind
+            them. You get a product that is fast, secure and ready to grow, delivered on time and explained in plain
+            language.
           </p>
 
           <div className="flex flex-wrap gap-3 md:col-span-4 md:justify-end">

@@ -18,7 +18,7 @@ export const Services = () => {
           </h2>
           <FadeIn className="md:col-span-4 md:self-end">
             <p className="max-w-sm leading-relaxed text-muted">
-              Practical engineering support, product-focused implementation, and delivery you can ship with.
+              Starting from scratch or fixing what you already have, I'll get it built, working and ready for your customers.
             </p>
           </FadeIn>
         </div>
