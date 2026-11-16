@@ -35,19 +35,35 @@ export const SERVICES: Service[] = [
 export const PROCESS: Service[] = [
   {
     title: "Understand",
-    detail: "The problem, the users and the constraints come first, before any code is written.",
+    detail: "We start with your goals, your users and what success looks like, before any code is written.",
+  },
+  {
+    title: "Gather",
+    detail: "Features, workflows, data and deadlines are written down in detail, so nothing gets missed or assumed.",
   },
   {
     title: "Design",
-    detail: "Data models, API contracts and service boundaries are planned up front, not patched in later.",
+    detail: "Screens, data and how every piece connects are planned up front, so the product is built right the first time.",
   },
   {
     title: "Build",
-    detail: "Clean, tested code, with regular demos so you see progress every week, not just at the end.",
+    detail: "Clean code in short sprints, with regular demos so you see progress every week, not just at the end.",
   },
   {
-    title: "Ship",
-    detail: "Deployment, handoff and clear documentation, so your team can own what we built.",
+    title: "Test",
+    detail: "Every feature is tested, automatically and by hand, so bugs are caught before your customers ever see them.",
+  },
+  {
+    title: "Deploy",
+    detail: "Your product goes live on reliable hosting, set up securely and ready for real users.",
+  },
+  {
+    title: "Feedback",
+    detail: "We review it together with real users, then refine what matters most to them.",
+  },
+  {
+    title: "Maintain",
+    detail: "Updates, fixes and improvements after launch, so your software keeps running smoothly as you grow.",
   },
 ];
 
@@ -60,8 +76,8 @@ export const SOCIAL_LINKS = {
 export const SKILLS: string[] = [
   // Interleaved so no single language dominates the strip
   "React", "Java", "TypeScript", "Spring Boot", "RESTful APIs", "PostgreSQL", "Microservices", "Tailwind CSS",
-  "MySQL", "JWT/OAuth", "Spring Security", "Git", "Node", "Swagger", "Express", "Thymeleaf", "FastAPI", "Artificial Intelligence", "Agentic AI", "Machine Learning", "Data Mining",
-  "Testing", "Postman",
+  "MySQL", "JWT/OAuth", "Spring Security", "Git", "Node", "Swagger", "Express", "Thymeleaf", "FastAPI", "Artificial Intelligence", "Agentic AI", "Machine Learning", "Data Mining", "AI Integration", "Integrated Systems",
+  "Testing", "Postman", "Agile", "Scrum", "Docket", "Jenkins", "Kubernetes"
 ];
 
 export const PROJECTS: Project[] = [
