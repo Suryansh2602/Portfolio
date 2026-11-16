@@ -60,8 +60,8 @@ export const SOCIAL_LINKS = {
 export const SKILLS: string[] = [
   // Interleaved so no single language dominates the strip
   "React", "Java", "TypeScript", "Spring Boot", "RESTful APIs", "PostgreSQL", "Microservices", "Tailwind CSS",
-  "MySQL", "JWT/OAuth", "Spring Security", "Git", "Java Swing", "Swagger", "Spring Data JPA", "Thymeleaf",
-  "Testing (JUnit, Mockito)", "Postman",
+  "MySQL", "JWT/OAuth", "Spring Security", "Git", "Node", "Swagger", "Express", "Thymeleaf", "FastAPI", "Artificial Intelligence", "Agentic AI", "Machine Learning", "Data Mining",
+  "Testing", "Postman",
 ];
 
 export const PROJECTS: Project[] = [
