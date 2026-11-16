@@ -77,7 +77,7 @@ export const SKILLS: string[] = [
   // Interleaved so no single language dominates the strip
   "React", "Java", "TypeScript", "Spring Boot", "RESTful APIs", "PostgreSQL", "Microservices", "Tailwind CSS",
   "MySQL", "JWT/OAuth", "Spring Security", "Git", "Node", "Swagger", "Express", "Thymeleaf", "FastAPI", "Artificial Intelligence", "Agentic AI", "Machine Learning", "Data Mining", "AI Integration", "Integrated Systems",
-  "Testing", "Postman", "Agile", "Scrum", "Docket", "Jenkins", "Kubernetes"
+  "Testing", "Postman", "Agile", "Scrum", "Docker", "Jenkins", "Kubernetes"
 ];
 
 export const PROJECTS: Project[] = [
