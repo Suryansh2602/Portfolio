@@ -2,10 +2,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import slideOne from '../assets/about-1.jpeg';
-import slideTwo from '../assets/about-2.jpeg';
-import slideThree from '../assets/about-3.jpeg';
-import slideFour from '../assets/about-4.jpeg';
+import slideOne from '../assets/about-1.webp';
+import slideTwo from '../assets/about-2.webp';
+import slideThree from '../assets/about-3.webp';
+import slideFour from '../assets/about-4.webp';
 import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
 import { FadeIn } from '../components/FadeIn';
 import { ScrollWords } from '../components/ScrollWords';

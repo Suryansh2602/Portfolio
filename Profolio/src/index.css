@@ -207,8 +207,19 @@
   }
 }
 
+.typewriter-caret {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+  .marquee-track,
+  .typewriter-caret {
     animation: none;
   }
 }

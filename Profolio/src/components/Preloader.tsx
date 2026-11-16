@@ -2,7 +2,9 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { EASE } from '../utils/motion';
 
-const DURATION_MS = 1400;
+// Whole intro is ~1.3s: 700ms count + 100ms hold + 500ms slide-away
+const DURATION_MS = 700;
+const HOLD_MS = 100;
 
 // Counts to 100, then the parent removes it and the panel slides away (exit animation).
 export const Preloader = ({ onDone }: { onDone: () => void }) => {
@@ -20,7 +22,7 @@ export const Preloader = ({ onDone }: { onDone: () => void }) => {
       if (progress < 1) {
         frame = requestAnimationFrame(tick);
       } else {
-        doneTimer.current = window.setTimeout(onDone, 250);
+        doneTimer.current = window.setTimeout(onDone, HOLD_MS);
       }
     };
 
@@ -36,7 +38,7 @@ export const Preloader = ({ onDone }: { onDone: () => void }) => {
     <motion.div
       className="fixed inset-0 z-[95] flex flex-col justify-between bg-bg text-ink"
       exit={{ y: '-100%' }}
-      transition={{ duration: 0.9, ease: EASE }}
+      transition={{ duration: 0.5, ease: EASE }}
       role="status"
       aria-label="Loading portfolio"
     >

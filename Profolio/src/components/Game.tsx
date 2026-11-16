@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import planeImage from '../assets/plane.png';
+import planeImage from '../assets/plane.webp';
 import { useTicTacToe } from '../hooks/useTicTacToe';
 import { getRandomIndex } from '../utils/random';
 import { MaskLine } from './MaskLine';

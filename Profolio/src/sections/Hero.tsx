@@ -5,8 +5,18 @@ import avatar from '../assets/avatar.webp';
 import { ApiTicker } from '../components/ApiTicker';
 import { Magnetic } from '../components/Magnetic';
 import { MaskLine } from '../components/MaskLine';
+import { Typewriter } from '../components/Typewriter';
 import { EASE } from '../utils/motion';
 import { openWhatsApp } from '../utils/whatsapp';
+
+// Cycled in the headline by the typewriter; add or reorder freely
+const BUILDS = [
+  'web applications',
+  'enterprise applications',
+  'desktop applications',
+  'integrated systems',
+  'scalable APIs',
+] as const;
 
 export const Hero = ({ ready }: { ready: boolean }) => {
   const ref = useRef<HTMLElement>(null);
@@ -52,10 +62,19 @@ export const Hero = ({ ready }: { ready: boolean }) => {
             Backend engineer
           </MaskLine>
           <MaskLine play={ready} delay={0.2}>
-            building <ApiTicker play={ready} /> <span className="serif-accent text-accent-ink">Spring Boot</span>
+            building <ApiTicker play={ready} />
           </MaskLine>
           <MaskLine play={ready} delay={0.3}>
-            systems that hold up.
+            <span className="sr-only">{BUILDS.join(', ')}</span>
+            {/* Capped at 9vw so the longest phrase still fits on one line on a phone */}
+            <Typewriter
+              words={BUILDS}
+              play={ready}
+              className="serif-accent text-[min(1em,9vw)] text-accent-ink"
+            />
+          </MaskLine>
+          <MaskLine play={ready} delay={0.4}>
+            that hold up.
           </MaskLine>
         </h1>
 
