@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
-import profilePhoto from '../assets/removebg-preview.png';
+import avatar from '../assets/avatar.webp';
 import { ApiTicker } from '../components/ApiTicker';
 import { Magnetic } from '../components/Magnetic';
 import { MaskLine } from '../components/MaskLine';
@@ -46,6 +46,8 @@ export const Hero = ({ ready }: { ready: boolean }) => {
         </motion.div>
 
         <h1 className="display-xl">
+          {/* Name for search engines and screen readers; the visible headline stays as designed */}
+          <span className="sr-only">Suryansh Pushpkar, Backend &amp; Full-Stack Developer: </span>
           <MaskLine play={ready} delay={0.1}>
             Backend engineer
           </MaskLine>
@@ -63,9 +65,11 @@ export const Hero = ({ ready }: { ready: boolean }) => {
         >
           <div className="flex items-center gap-4 md:col-span-3">
             <img
-              src={profilePhoto}
+              src={avatar}
               alt="Suryansh Pushpkar"
-              className="h-14 w-14 shrink-0 rounded-full object-cover object-[50%_22%] ring-1 ring-line"
+              width={56}
+              height={56}
+              className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-line"
             />
             <div className="space-y-1.5">
               <p className="text-sm font-semibold">Suryansh Pushpkar</p>

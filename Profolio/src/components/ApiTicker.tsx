@@ -41,20 +41,23 @@ export const ApiTicker = ({ play }: { play: boolean }) => {
 
           <span className="relative inline-flex h-[1.2em] w-[6.8em] items-center overflow-hidden">
             <AnimatePresence mode="popLayout" initial={false}>
+              {/* Text comes from CSS content, not the DOM, so search engines don't read it as part of the h1 */}
               <motion.span
                 key={index}
+                data-label={`${request.method} ${request.path}`}
                 initial={{ y: '110%' }}
                 animate={{ y: '0%' }}
                 exit={{ y: '-110%' }}
                 transition={{ duration: 0.5, ease: EASE }}
-                className="absolute left-0 whitespace-nowrap"
-              >
-                {request.method} {request.path}
-              </motion.span>
+                className="absolute left-0 whitespace-nowrap before:content-[attr(data-label)]"
+              />
             </AnimatePresence>
           </span>
 
-          <span className="rounded-full bg-on-accent px-[0.55em] py-[0.3em] text-accent">{request.status}</span>
+          <span
+            data-label={request.status}
+            className="rounded-full bg-on-accent px-[0.55em] py-[0.3em] text-accent before:content-[attr(data-label)]"
+          />
         </span>
       </span>
     </motion.span>

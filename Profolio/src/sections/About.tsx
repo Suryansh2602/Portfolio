@@ -45,6 +45,8 @@ export const About = () => {
     <section id="about" className="py-14 md:py-20">
       <div className="container-x">
         <SectionLabel index="01">About</SectionLabel>
+        {/* This section leads with a paragraph, so give it a heading for search engines and screen readers */}
+        <h2 className="sr-only">About Suryansh Pushpkar</h2>
 
         <div className="mt-8 grid gap-12 md:mt-10 md:grid-cols-12 md:gap-8">
           <FadeIn className="md:col-span-5">
@@ -55,6 +57,8 @@ export const About = () => {
                   key={active}
                   src={slides[active].image}
                   alt={slides[active].caption}
+                  loading="lazy"
+                  decoding="async"
                   initial={{ opacity: 0, scale: 1.04 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
