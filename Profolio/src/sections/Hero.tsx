@@ -42,7 +42,7 @@ export const Hero = ({ ready }: { ready: boolean }) => {
           <p className="label">
             Delivering for
             <br />
-            US clients
+            US &amp; Indian clients
           </p>
           <p className="label hidden md:block">
             Websites · Web apps

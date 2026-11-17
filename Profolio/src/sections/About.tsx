@@ -21,14 +21,14 @@ const slides = [
 ];
 
 const facts = [
-  { label: 'Clients', value: 'US clients & US-based projects' },
+  { label: 'Clients', value: 'Clients in the US & India' },
   { label: 'Domains', value: 'US defence, banking, ERDS (Enterprise Ready Deployment System)' },
   { label: 'What I build', value: 'Websites, web apps, business & desktop software' },
   { label: 'How I work', value: 'Idea to launch, with clear updates along the way' },
 ];
 
 const INTRO =
-  "I'm Suryansh, a full-stack software engineer. I build complete products: the screens people use, and the systems behind them that keep data safe, connect your tools and handle growth. I've worked with US clients on US defence and banking projects, and on ERDS (Enterprise Ready Deployment System). Alongside that, I take on freelance builds for businesses that want software done properly, without the jargon.";
+  "I'm Suryansh, a full-stack software engineer. I build complete products: the screens people use, and the systems behind them that keep data safe, connect your tools and handle growth. I've worked with US clients on US defence and banking projects, and on ERDS (Enterprise Ready Deployment System), as well as with clients across India. Alongside that, I take on freelance builds for businesses that want software done properly, without the jargon.";
 
 export const About = () => {
   const [active, setActive] = useState(0);
