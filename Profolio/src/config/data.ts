@@ -100,6 +100,7 @@ export const PROJECTS: Project[] = [
     type: "Business software",
     description: "Software that helps a library manage its books, members and borrowing in one organised place, instead of paper registers.",
     tags: ["Java", "Servlet", "JSP", "MySQL"],
+    github: "https://github.com/Suryansh2602/Library-Management-System",
   },
   {
     title: "Banking Transaction Management System",
