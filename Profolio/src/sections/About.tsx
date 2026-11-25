@@ -6,6 +6,8 @@ import slideOne from '../assets/about-1.webp';
 import slideTwo from '../assets/about-2.webp';
 import slideThree from '../assets/about-3.webp';
 import slideFour from '../assets/about-4.webp';
+import slideFive from '../assets/pink-suit.webp';
+import slideSix from '../assets/blue-suit.webp';
 import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
 import { FadeIn } from '../components/FadeIn';
 import { ScrollWords } from '../components/ScrollWords';
@@ -18,6 +20,8 @@ const slides = [
   { image: slideTwo, caption: 'Learning, building, and evolving as a developer' },
   { image: slideThree, caption: 'Projects that shaped technical depth and execution' },
   { image: slideFour, caption: 'From training to real-world delivery systems' },
+  { image: slideFive, caption: 'Delivering Multipurpose Applications' },
+  { image: slideSix, caption: 'Multi Domain business online assistance' }
 ];
 
 const facts = [
