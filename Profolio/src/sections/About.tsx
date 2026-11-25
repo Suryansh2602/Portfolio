@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import slideOne from '../assets/blue-suit.webp';
-import slideTwo from '../assets/ pink-suit.webp';
+import slideTwo from '../assets/pink-suit.webp';
 import slideThree from '../assets/about-3.webp';
 import slideFour from '../assets/about-4.webp';
 import slideFive from '../assets/about-2.webp';
